@@ -1,4 +1,4 @@
-# CPSC 210 Personal Project - Course Planner
+# CPSC 210 Personal Project:  Course Planner
 
 ## Project Proposal
 
@@ -20,11 +20,11 @@ Columbia (UBC) Student Services.*
 
 - As a user, I want to be able to add a course to my worklist.
 - As a user, I want to be able to delete a course from my worklist.
-- As a user, I want to be able to mark a course as "required" or "optional" for my specialization.
-- As a user, I want to be able to "star" or "unstar" a course to show my special preference.
+- As a user, I want to be able to set whether a course is required for my specialization.
+- As a user, I want to be able to "star" or "unstar" a course to show my personal preference.
 - As a user, I want to be able to view the list of courses in my worklist.
+- As a user, I want to be able to view the list of only the starred courses in my worklist.
 - As a user, I want to be able to see the number of total credits in my worklist.
-- As a user, I want to be able to receive a reminder when I have too many courses/credits in my worklist.
-- As a user, I want to be able to see the number of required and optional courses in my worklist.
-- As a user, I want to be able to view the list of starred courses in my worklist.
-- As a user, I want to be able to manage multiple worklists separately.
+- As a user, I want to be able to receive a reminder when I have added too many courses/credits in my worklist.
+- As a user, I want to be able to see the number of required and optional (non-required) courses in my worklist.
+- As a user, I want to be able to manage multiple worklists independently.
