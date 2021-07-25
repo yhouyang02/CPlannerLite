@@ -1,11 +1,30 @@
-# My Personal Project
+# CPSC 210 Personal Project - Course Planner
 
-## A subtitle
+## Project Proposal
 
-A *bulleted* list:
-- item 1
-- item 2
-- item 3
+This is a course planning application that allows users to maintain several worklists on their local directories, in
+which users may customize and manage their own university courses. The application also allows users to check and
+modifies the properties of the courses in their worklists, as well as providing useful statistics and tips for course
+registration.
 
-An example of text with **bold** and *italic* fonts.  Note that the IntelliJ markdown previewer doesn't seem to render 
-the bold and italic fonts correctly but they will appear correctly on GitHub.
+This application is designed to facilitate undergraduate students during their course registration process. As an
+undergrad myself, I always spent too many hours in planning my course schedules. I hope this application could help
+students to simplify their course planning processes at the start of every term.
+
+*Note: The properties of a course (e.g., course code, course name, credits, etc.) and some test cases are referenced
+from
+[Vancouver Academic Calendar 2021/22](http://www.calendar.ubc.ca/vancouver/), published by The University of British
+Columbia (UBC) Student Services.*
+
+## User Stories
+
+- As a user, I want to be able to add a course to my worklist.
+- As a user, I want to be able to delete a course from my worklist.
+- As a user, I want to be able to mark a course as "required" or "optional" for my specialization.
+- As a user, I want to be able to "star" or "unstar" a course to show my special preference.
+- As a user, I want to be able to view the list of courses in my worklist.
+- As a user, I want to be able to see the number of total credits in my worklist.
+- As a user, I want to be able to receive a reminder when I have too many courses/credits in my worklist.
+- As a user, I want to be able to see the number of required and optional courses in my worklist.
+- As a user, I want to be able to view the list of starred courses in my worklist.
+- As a user, I want to be able to manage multiple worklists separately.
