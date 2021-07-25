@@ -3,14 +3,14 @@ package model;
 // Represents a 24-hour time with hours and minutes.
 public class Time {
 
-    private int hours;
-    private int minutes;
+    private int hour;
+    private int minute;
 
     // REQUIRES: hours and minutes should both be valid in 24-hour format;
     //           i.e. 0 <= hours <= 24
     //                0 <= minutes <= 60
     // EFFECTS: constructs a new time with hours and minutes
-    public Time(int hours, int minutes) {
+    public Time(int hour, int minute) {
         // stub
     }
 
