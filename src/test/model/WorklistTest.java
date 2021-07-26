@@ -140,6 +140,13 @@ class WorklistTest extends ModelTest {
 
     @Test
     public void testDeleteCourseException() {
+        try {
+            testWorklist.deleteCourse(testCourse1);
+            fail(FAIL_MSG_EENT);
+        } catch (CourseNotFoundException e) {
+            // expected
+        }
+
         addValidCourses();
         assertEquals(testWorklist.getCourses().size(), 3);
 
@@ -233,6 +240,14 @@ class WorklistTest extends ModelTest {
     public void testGetTotalCredits() {
         addValidCourses();
         assertEquals(testWorklist.getTotalCredits(), 4 + 4 + 3);
+    }
+
+    @Test
+    public void testGetSubjectCodes() {
+        addValidCourses();
+        assertEquals(testWorklist.getSubjectCodes().size(), 2);
+        assertTrue(testWorklist.getSubjectCodes().contains("CPSC"));
+        assertTrue(testWorklist.getSubjectCodes().contains("PSYC"));
     }
 
     @Test

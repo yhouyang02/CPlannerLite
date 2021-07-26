@@ -5,10 +5,14 @@ import exception.CourseConflictsException;
 import exception.CourseNotFoundException;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 // Represents a worklist to manage courses
 public class Worklist {
+
+    public static final int RECOMMENDED_COURSE_LIMIT = 5;
 
     private String name;
     private List<Course> courses;
@@ -51,7 +55,7 @@ public class Worklist {
     // EFFECTS: if course is not in courses, throws CourseNotFoundException;
     //          otherwise, removes course from courses
     public void deleteCourse(Course course) throws CourseNotFoundException {
-        if (!courses.contains(course)) {
+        if (courses.isEmpty() || !courses.contains(course)) {
             throw new CourseNotFoundException();
         }
         courses.remove(course);
@@ -127,6 +131,15 @@ public class Worklist {
             credits += c.getCredits();
         }
         return credits;
+    }
+
+    // EFFECTS: returns a set of all subject code appeared in courses
+    public Set<String> getSubjectCodes() {
+        Set<String> codes = new HashSet<>();
+        for (Course c : courses) {
+            codes.add(c.getSubjectCode());
+        }
+        return codes;
     }
 
     // EFFECTS: if there are no courses with the given subject code, returns 0;
