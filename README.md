@@ -25,6 +25,6 @@ Columbia (UBC) Student Services.*
 - As a user, I want to be able to view the list of courses in my worklist.
 - As a user, I want to be able to view the list of only the starred courses in my worklist.
 - As a user, I want to be able to see the number of total credits in my worklist.
+- As a user, I want to be able to see the number of courses of each subject in my worklist. 
 - As a user, I want to be able to receive a reminder when I have added too many courses/credits in my worklist.
 - As a user, I want to be able to see the number of required and optional (non-required) courses in my worklist.
-- As a user, I want to be able to manage multiple worklists independently.
