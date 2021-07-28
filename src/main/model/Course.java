@@ -30,22 +30,27 @@ public class Course {
         this.starred = false;
     }
 
+    // EFFECTS: returns the subject code of this course
     public String getSubjectCode() {
         return subjectCode;
     }
 
+    // EFFECTS: returns the course code of this course
     public String getCourseCode() {
         return courseCode;
     }
 
+    // EFFECTS: returns the section code of this course
     public String getSectionCode() {
         return sectionCode;
     }
 
+    // EFFECTS: returns the title of this course
     public String getTitle() {
         return title;
     }
 
+    // EFFECTS: returns the comment of this course
     public String getComments() {
         return comments;
     }
@@ -56,14 +61,17 @@ public class Course {
         this.comments = comments;
     }
 
+    // EFFECTS: returns the schedule of this course
     public Schedule getSchedule() {
         return schedule;
     }
 
+    // EFFECTS: returns the credits of this course
     public int getCredits() {
         return credits;
     }
 
+    // EFFECTS: returns true if the course is required for the user's specialization, false otherwise
     public boolean isRequired() {
         return required;
     }
@@ -74,6 +82,7 @@ public class Course {
         this.required = required;
     }
 
+    // EFFECTS: returns true if the course is starred by the user
     public boolean isStarred() {
         return starred;
     }

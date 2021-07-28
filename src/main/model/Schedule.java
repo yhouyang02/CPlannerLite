@@ -2,11 +2,13 @@ package model;
 
 import exception.IllegalDaysException;
 
-// Represents the schedule of a university course with
-// start time, end time, and days of meeting (of a week).
+// Represents the schedule of a university course with a
+// start time, an end time, and days of meeting (of a week)
 public class Schedule {
 
-    public static final String[] STR_WEEKDAY_ABBR = {"Mon", "Tue", "Wed", "Thu", "Fri"};
+    private static final String[] STR_WEEKDAY_ABBR = {"Mon", "Tue", "Wed", "Thu", "Fri"};
+
+    // Common meeting times for university courses
     public static final boolean[] MEETING_DAYS_MWF = {true, false, true, false, true};
     public static final boolean[] MEETING_DAYS_TT = {false, true, false, true, false};
     public static final boolean[] MEETING_DAYS_MTTF = {true, true, false, true, true};
@@ -26,14 +28,17 @@ public class Schedule {
         this.endTime = end;
     }
 
+    // EFFECTS: returns the meeting days of this schedule
     public boolean[] getDays() {
         return days;
     }
 
+    // EFFECTS: returns the starting time of this schedule
     public Time getStartTime() {
         return startTime;
     }
 
+    // EFFECTS: returns the ending time of this schedule
     public Time getEndTime() {
         return endTime;
     }

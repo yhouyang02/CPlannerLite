@@ -3,7 +3,7 @@ package model;
 import exception.IllegalHourException;
 import exception.IllegalMinuteException;
 
-// Represents a 24-hour time with hours and minutes.
+// Represents a 24-hour time with hour and minute
 public class Time {
 
     private int hour;
@@ -22,15 +22,17 @@ public class Time {
         this.minute = minute;
     }
 
+    // EFFECTS: returns the hour of this time
     public int getHour() {
         return hour;
     }
 
+    // EFFECTS: returns the minute of this time
     public int getMinute() {
         return minute;
     }
 
-    // EFFECTS: else, returns true if this time comes later than t, false otherwise
+    // EFFECTS: returns true if this time comes later than t, false otherwise
     public boolean laterThan(Time t) {
         if (hour == t.getHour()) {
             return minute >= t.getMinute();

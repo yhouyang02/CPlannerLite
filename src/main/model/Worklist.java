@@ -17,16 +17,18 @@ public class Worklist {
     private String name;
     private List<Course> courses;
 
-    // EFFECTS: constructs a new worklist with name
+    // EFFECTS: constructs a new worklist with name and an empty course list
     public Worklist(String name) {
         this.name = name;
         this.courses = new ArrayList<>();
     }
 
+    // EFFECTS: returns the name of this worklist
     public String getName() {
         return name;
     }
 
+    // EFFECTS: returns the list of courses of this worklist
     public List<Course> getCourses() {
         return courses;
     }
@@ -175,4 +177,5 @@ public class Worklist {
         }
         return num;
     }
+    
 }

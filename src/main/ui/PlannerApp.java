@@ -255,7 +255,7 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads credits of course from user input
-    public void loadCredits() {
+    private void loadCredits() {
         System.out.println("\nHow many credits does this course have?");
         tempCredits = input.nextInt();
         input.nextLine();
@@ -263,7 +263,7 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads whether the course is required from user input
-    public void loadRequired() {
+    private void loadRequired() {
         System.out.println("\nIs this course required for your specialization (true/false)?");
         tempRequired = input.nextBoolean();
         input.nextLine();
