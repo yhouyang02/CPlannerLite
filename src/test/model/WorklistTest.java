@@ -17,8 +17,7 @@ class WorklistTest extends ModelTest {
         initCourses();
     }
 
-    @Test
-    public void initCourses() {
+    private void initCourses() {
         try {
             testCourse1 = new Course("CPSC", "221", "103",
                     "Basic Algorithms and Data Structures",
