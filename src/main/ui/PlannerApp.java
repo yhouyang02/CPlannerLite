@@ -118,7 +118,7 @@ public class PlannerApp {
 
     // EFFECTS: displays all courses menu of options to user
     private void displayAllCoursesMenu() {
-        System.out.println("Worklist: " + worklist.getName());
+        System.out.println("\nWorklist: " + worklist.getName());
         System.out.println("All Courses - Select from:");
         System.out.println("\tn -> Add a new course");
         System.out.println("\td -> Delete a course");
@@ -168,7 +168,7 @@ public class PlannerApp {
         }
         try {
             worklist.addCourse(tempCourse);
-            System.out.println(tempCourse.getSubjectCourseCode() + "has been added to worklist.");
+            System.out.println("\n" + tempCourse.getSubjectCourseCode() + " has been added to worklist.");
         } catch (CourseAlreadyExistsException e) {
             System.err.println("[ERROR] Course adding failed! "
                     + tempCourse.getSubjectCourseCode() + " is already in worklist.");
@@ -180,6 +180,7 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads subject, course, and section codes from user input
+    // TODO: improve the inputting logic
     private void loadCodes() {
         System.out.println("\nNote: The codes should be in format \"<subject> <course> <section>\". "
                 + "E.g., CPSC 210 921");
@@ -199,6 +200,8 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads meeting days of course from user input
+    // FIXME: crushed and exited when entering wrong days
+    // TODO: simplifying the way of entering a list of booleans
     private void loadDays() {
         tempDays = new boolean[5];
         System.out.println("\nNote: The meeting days should be five boolean values, separated by space.");
@@ -213,6 +216,7 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads starting times of course from user input
+    // FIXME: program crushed and exited when entering wrong format of time
     private void loadStartTime() {
         System.out.println("\nPlease enter the start time of the course (in 24-hour format):");
         String time = input.next();
@@ -229,6 +233,7 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads ending time of course from user input
+    // FIXME: program crushed and exited when entering wrong format of time
     private void loadEndTimes() {
         System.out.println("\nPlease enter the end time of the course (in 24-hour format):");
         String time = input.next();
@@ -256,13 +261,15 @@ public class PlannerApp {
     // MODIFIES: this
     // EFFECTS: loads credits of course from user input
     private void loadCredits() {
-        System.out.println("\nHow many credits does this course have?");
+        System.out.println("\nHow many credit(s) do this course have?");
         tempCredits = input.nextInt();
         input.nextLine();
     }
 
     // MODIFIES: this
     // EFFECTS: loads whether the course is required from user input
+    // FIXME: program crushed and exited when entering wrong format of time
+    // TODO: simplifying the process of entering a boolean value
     private void loadRequired() {
         System.out.println("\nIs this course required for your specialization (true/false)?");
         tempRequired = input.nextBoolean();
@@ -278,6 +285,7 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: performs the action of deleting a course
+    // FIXME: expected CourseNotFoundException not thrown
     private void doDeleteCourse() {
         if (worklist.getCourses().isEmpty()) {
             System.err.println("[ERROR] No courses in worklist! Please check your courses.");
@@ -299,11 +307,12 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: performs the action of starring a course
+    // FIXME: expected CourseNotFoundException not thrown
     private void doStarCourse() {
         if (worklist.getCourses().isEmpty()) {
             System.err.println("[ERROR] No courses in worklist! Please check your courses.");
         } else {
-            System.out.println("Please enter the subject and course codes of the course you want to delete:");
+            System.out.println("Please enter the subject and course codes of the course you want to star:");
             input.nextLine();
             String code = input.nextLine();
             try {
@@ -316,11 +325,12 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: performs the action of starring a course
+    // FIXME: expected CourseNotFoundException not thrown
     private void doUnstarCourse() {
         if (worklist.getCourses().isEmpty()) {
             System.err.println("[ERROR] No courses in worklist! Please check your courses.");
         } else {
-            System.out.println("Please enter the subject and course codes of the course you want to delete:");
+            System.out.println("Please enter the subject and course codes of the course you want to unstar:");
             input.nextLine();
             String code = input.nextLine();
             try {
@@ -341,20 +351,26 @@ public class PlannerApp {
                 System.out.println(c.toString());
             }
         }
-        System.out.println("Note: If you want to make changes to the courses, select 'c' from the main menu.");
+        System.out.println("\nNote: If you want to make changes to the courses, select 'c' from the main menu.");
     }
 
     // EFFECTS: prints out the number of all/starred/required/optional courses, total credits,
     private void printStatistics(Worklist worklist) {
         System.out.println("\n### Worklist Statistics ###");
-        System.out.println("Name: " + worklist.getName());
-        System.out.println("Course(s): " + worklist.getCourses().size());
-        System.out.println("\tRequired: " + worklist.getNumRequiredCourses());
-        System.out.println("\tOptional: " + worklist.getNumOptionalCourses());
-        for (String s : worklist.getSubjectCodes()) {
-            System.out.println("\t" + s + ": " + worklist.getNumCoursesOfSubject(s));
+        if (worklist.getCourses().isEmpty()) {
+            System.out.println("[WARNING] No courses in worklist!");
+        } else {
+            System.out.println("Name: " + worklist.getName());
+            System.out.println("Course(s): " + worklist.getCourses().size());
+            System.out.println("\tRequired: " + worklist.getNumRequiredCourses());
+            System.out.println("\tOptional: " + worklist.getNumOptionalCourses());
+            System.out.println("Course(s) by subject: " + worklist.getCourses().size());
+            for (String s : worklist.getSubjectCodes()) {
+                System.out.println("\t" + s + ": " + worklist.getNumCoursesOfSubject(s));
+            }
+            System.out.println("Credit(s): " + worklist.getTotalCredits());
         }
-        System.out.println("Credit(s): " + worklist.getTotalCredits());
+
     }
 
     // EFFECTS: prints out help menu of options to user
