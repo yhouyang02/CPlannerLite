@@ -220,10 +220,9 @@ public class PlannerApp {
         System.out.println("\nPlease enter the start time of the course (in 24-hour format):");
         String time = input.nextLine();
 
-        int i = time.indexOf(":");
-        int hour = Integer.parseInt(time.substring(0, i));
-        int minute = Integer.parseInt(time.substring(i + 1));
         try {
+            int hour = Time.parseHour(time);
+            int minute = Time.parseMinute(time);
             tempStartTime = new Time(hour, minute);
         } catch (IllegalTimeException e) {
             System.err.println("[ERROR] Invalid time! Please enter again.");
@@ -237,10 +236,9 @@ public class PlannerApp {
         System.out.println("\nPlease enter the end time of the course (in 24-hour format):");
         String time = input.nextLine();
 
-        int i = time.indexOf(":");
-        int hour = Integer.parseInt(time.substring(0, i));
-        int minute = Integer.parseInt(time.substring(i + 1));
         try {
+            int hour = Time.parseHour(time);
+            int minute = Time.parseMinute(time);
             tempEndTime = new Time(hour, minute);
         } catch (IllegalTimeException e) {
             System.err.println("[ERROR] Invalid time! Please enter again");
@@ -253,8 +251,8 @@ public class PlannerApp {
     private void loadSchedule() {
         try {
             tempSchedule = new Schedule(tempDays, tempStartTime, tempEndTime);
-        } catch (IllegalDaysException e) {
-            System.err.println("[ERROR] Invalid meeting days! Please check your input.");
+        } catch (Exception e) {
+            System.err.println("[ERROR] Failed to create a course schedule! Please check your input and try again.");
         }
     }
 
@@ -262,8 +260,15 @@ public class PlannerApp {
     // EFFECTS: loads credits of course from user input
     private void loadCredits() {
         System.out.println("\nHow many credit(s) do this course have?");
-        tempCredits = input.nextInt();
-        input.nextLine();
+        try {
+            tempCredits = Integer.parseInt(input.nextLine());
+            if (tempCredits >= Course.COMMON_CREDIT_LIMIT) {
+                System.out.println("\n[WARNING] Abnormal credit entered! Please make sure the credit is correct.");
+            }
+        } catch (NumberFormatException e) {
+            System.err.println("[ERROR] Invalid credit! Please enter again");
+            loadCredits();
+        }
     }
 
     // MODIFIES: this
@@ -279,8 +284,12 @@ public class PlannerApp {
     // MODIFIES: this
     // EFFECTS: loads Course from temporary values
     private void loadCourse() {
-        tempCourse = new Course(tempSubjectCode, tempCourseCode, tempSectionCode,
-                tempTitle, tempSchedule, tempCredits, tempRequired);
+        try {
+            tempCourse = new Course(tempSubjectCode, tempCourseCode, tempSectionCode,
+                    tempTitle, tempSchedule, tempCredits, tempRequired);
+        } catch (Exception e) {
+            System.err.println("[ERROR] Failed to create a course! Please check your input and try again.");
+        }
     }
 
     // MODIFIES: this

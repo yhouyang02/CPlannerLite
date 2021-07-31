@@ -4,6 +4,8 @@ package model;
 // section number, comments, and its special attributes for a student
 public class Course {
 
+    public static final int COMMON_CREDIT_LIMIT = 8;
+
     private String subjectCode;
     private String courseCode;
     private String sectionCode;
