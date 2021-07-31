@@ -66,6 +66,26 @@ public class TimeTest extends ModelTest {
     }
 
     @Test
+    public void testParseHourNoException() {
+
+    }
+
+    @Test
+    public void testParseHourIllegalTimeException() {
+
+    }
+
+    @Test
+    public void testParseMinuteNoExeption() {
+
+    }
+
+    @Test
+    public void testParseMinuteIllegalTimeException() {
+
+    }
+
+    @Test
     public void testLaterThan() {
         try {
             testTime = new Time(7, 30);
@@ -91,19 +111,13 @@ public class TimeTest extends ModelTest {
         } catch (IllegalTimeException e) {
             fail(FAIL_MSG_UEET);
         }
-
         assertEquals(testTime.toString(), "07:30");
-    }
 
-    @Test
-    public void testToStringPM() {
         try {
             testTime = new Time(19, 30);
         } catch (IllegalTimeException e) {
             fail(FAIL_MSG_UEET);
         }
-
         assertEquals(testTime.toString(), "19:30");
     }
-
 }

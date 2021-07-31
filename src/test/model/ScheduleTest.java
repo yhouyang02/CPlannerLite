@@ -27,6 +27,23 @@ public class ScheduleTest extends ModelTest {
     }
 
     @Test
+    public void testConstructorNoException() {
+        assertEquals(testSchedule.getDays(), MEETING_DAYS_MWF);
+        assertEquals(testSchedule.getStartTime(), testStartTime);
+        assertEquals(testSchedule.getEndTime(), testEndTime);
+    }
+
+    @Test
+    public void testConstructorIllegalDaysException() {
+        try {
+            testSchedule = new Schedule(ILLEGAL_DAYS, testStartTime, testEndTime);
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalDaysException e) {
+            // expected
+        }
+    }
+
+    @Test
     public void testParseDaysNoException() {
         try {
             assertEquals(Schedule.parseDays("TFTFT").length, 5);
@@ -57,23 +74,6 @@ public class ScheduleTest extends ModelTest {
         }
 
 
-    }
-
-    @Test
-    public void testConstructorNoException() {
-        assertEquals(testSchedule.getDays(), MEETING_DAYS_MWF);
-        assertEquals(testSchedule.getStartTime(), testStartTime);
-        assertEquals(testSchedule.getEndTime(), testEndTime);
-    }
-
-    @Test
-    public void testConstructorException() {
-        try {
-            testSchedule = new Schedule(ILLEGAL_DAYS, testStartTime, testEndTime);
-            fail(FAIL_MSG_EENT);
-        } catch (IllegalDaysException e) {
-            // expected
-        }
     }
 
     @Test

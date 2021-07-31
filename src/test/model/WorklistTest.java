@@ -66,7 +66,6 @@ class WorklistTest extends ModelTest {
 
     @Test
     public void testAddCourseNoException() {
-        // course already added in init()
         addValidCourses();
         assertEquals(testWorklist.getCourses().size(), 3);
     }
@@ -138,7 +137,7 @@ class WorklistTest extends ModelTest {
     }
 
     @Test
-    public void testDeleteCourseException() {
+    public void testDeleteCourseCourseNotFoundException() {
         try {
             testWorklist.deleteCourse(testCourse1);
             fail(FAIL_MSG_EENT);
@@ -177,7 +176,7 @@ class WorklistTest extends ModelTest {
     }
 
     @Test
-    public void testSetRequiredException() {
+    public void testSetRequiredCourseNotFoundException() {
         addValidCourses();
         try {
             testWorklist.setRequired("MATH 200", true);
@@ -206,7 +205,7 @@ class WorklistTest extends ModelTest {
     }
 
     @Test
-    public void testStarUnstarException() {
+    public void testStarUnstarCourseNotFoundException() {
         addValidCourses();
         try {
             testWorklist.star("MATH 200");

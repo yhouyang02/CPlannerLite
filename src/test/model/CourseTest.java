@@ -1,5 +1,7 @@
 package model;
 
+import exception.IllegalDaysException;
+import exception.IllegalTimeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +19,7 @@ public class CourseTest extends ModelTest {
             testStartTime = new Time(13, 0);
             testEndTime = new Time(14, 0);
             testSchedule = new Schedule(Schedule.MEETING_DAYS_MWF, testStartTime, testEndTime);
-        } catch (Exception e) {
+        } catch (IllegalTimeException | IllegalDaysException e) {
             fail(FAIL_MSG_UEET);
         }
 
