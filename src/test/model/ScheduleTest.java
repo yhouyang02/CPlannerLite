@@ -57,18 +57,21 @@ public class ScheduleTest extends ModelTest {
     public void testParseDaysIllegalDaysException() {
         try {
             assertEquals(Schedule.parseDays("TFTFTF").length, 5);
+            fail(FAIL_MSG_EENT);
         } catch (IllegalDaysException e) {
             // expected
         }
 
         try {
             assertEquals(Schedule.parseDays("FTGTF").length, 5);
+            fail(FAIL_MSG_EENT);
         } catch (IllegalDaysException e) {
             // expected
         }
 
         try {
             assertEquals(Schedule.parseDays("ftgtf").length, 5);
+            fail(FAIL_MSG_EENT);
         } catch (IllegalDaysException e) {
             // expected
         }
