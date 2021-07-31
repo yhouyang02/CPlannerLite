@@ -11,9 +11,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ScheduleTest extends ModelTest {
 
+    private final boolean[] EXAMPLE_ILLEGAL_DAYS = {false, false, false, false, false, false};
+
     private Schedule testSchedule, notOverlapped, sameDaysOverlapped, differentDaysOverlapped;
     private Time testStartTime, testEndTime;
-    private boolean[] ILLEGAL_DAYS = {false, false, false, false, false, false};
 
     @BeforeEach
     public void init() {
@@ -36,7 +37,7 @@ public class ScheduleTest extends ModelTest {
     @Test
     public void testConstructorIllegalDaysException() {
         try {
-            testSchedule = new Schedule(ILLEGAL_DAYS, testStartTime, testEndTime);
+            testSchedule = new Schedule(EXAMPLE_ILLEGAL_DAYS, testStartTime, testEndTime);
             fail(FAIL_MSG_EENT);
         } catch (IllegalDaysException e) {
             // expected

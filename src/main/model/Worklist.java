@@ -12,7 +12,7 @@ import java.util.Set;
 // Represents a worklist to manage courses
 public class Worklist {
 
-    public static final int RECOMMENDED_COURSE_LIMIT = 5;
+    public static final int COURSE_LIMIT = 5;
 
     private String name;
     private List<Course> courses;
@@ -177,5 +177,5 @@ public class Worklist {
         }
         return num;
     }
-    
+
 }

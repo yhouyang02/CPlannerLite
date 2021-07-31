@@ -6,11 +6,13 @@ import exception.IllegalDaysException;
 // start time, an end time, and days of meeting (of a week)
 public class Schedule {
 
-    // Common meeting times for university courses
+    // Common meeting days for university courses
     public static final boolean[] MEETING_DAYS_MWF = {true, false, true, false, true};
     public static final boolean[] MEETING_DAYS_TT = {false, true, false, true, false};
     public static final boolean[] MEETING_DAYS_MTTF = {true, true, false, true, true};
+
     private static final String[] STR_WEEKDAY_ABBR = {"Mon", "Tue", "Wed", "Thu", "Fri"};
+
     private boolean[] days;
     private Time startTime;
     private Time endTime;
