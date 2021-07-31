@@ -6,13 +6,11 @@ import exception.IllegalDaysException;
 // start time, an end time, and days of meeting (of a week)
 public class Schedule {
 
-    private static final String[] STR_WEEKDAY_ABBR = {"Mon", "Tue", "Wed", "Thu", "Fri"};
-
     // Common meeting times for university courses
     public static final boolean[] MEETING_DAYS_MWF = {true, false, true, false, true};
     public static final boolean[] MEETING_DAYS_TT = {false, true, false, true, false};
     public static final boolean[] MEETING_DAYS_MTTF = {true, true, false, true, true};
-
+    private static final String[] STR_WEEKDAY_ABBR = {"Mon", "Tue", "Wed", "Thu", "Fri"};
     private boolean[] days;
     private Time startTime;
     private Time endTime;
@@ -26,6 +24,29 @@ public class Schedule {
         this.days = days;
         this.startTime = start;
         this.endTime = end;
+    }
+
+    // EFFECTS: parses string s as a list of boolean with length == 5;
+    //          throws NullPointerException when s is null;
+    //          throws IllegalDaysException when s does not have a length of 5, and
+    //                                      when s is not completely composed of 'T' and 'F', case-insensitive
+    public static boolean[] parseDays(String s) throws IllegalDaysException {
+        boolean[] tempDays = new boolean[5];
+        if (s == null) {
+            throw new NullPointerException();
+        } else if (s.length() != 5) {
+            throw new IllegalDaysException();
+        } else {
+            for (int i = 0; i < 5; i++) {
+                String tempStr = s.substring(i, i + 1);
+                if (!tempStr.equalsIgnoreCase("T") && !tempStr.equalsIgnoreCase("F")) {
+                    throw new IllegalDaysException();
+                } else {
+                    tempDays[i] = tempStr.equalsIgnoreCase("T");
+                }
+            }
+        }
+        return tempDays;
     }
 
     // EFFECTS: returns the meeting days of this schedule

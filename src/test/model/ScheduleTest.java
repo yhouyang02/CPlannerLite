@@ -27,6 +27,56 @@ public class ScheduleTest extends ModelTest {
     }
 
     @Test
+    public void testParseDaysNoException() {
+        try {
+            assertEquals(Schedule.parseDays("TFTFT").length, 5);
+            assertEquals(Schedule.parseDays("tftft").length, 5);
+        } catch (IllegalDaysException e) {
+            fail(FAIL_MSG_UEET);
+        }
+    }
+
+    @Test
+    public void testParseDaysNullPointerException() {
+        try {
+            assertEquals(Schedule.parseDays(null).length, 5);
+        } catch (NullPointerException e) {
+            // expected
+        } catch (IllegalDaysException e) {
+            fail(FAIL_MSG_UEET);
+        }
+    }
+
+    @Test
+    public void testParseDaysIllegalDaysException() {
+        try {
+            assertEquals(Schedule.parseDays("TFTFTF").length, 5);
+        } catch (NullPointerException e) {
+            fail(FAIL_MSG_UEET);
+        } catch (IllegalDaysException e) {
+            // expected
+        }
+
+        try {
+            assertEquals(Schedule.parseDays("FTGTF").length, 5);
+        } catch (NullPointerException e) {
+            fail(FAIL_MSG_UEET);
+        } catch (IllegalDaysException e) {
+            // expected
+        }
+
+        try {
+            assertEquals(Schedule.parseDays("ftgtf").length, 5);
+        } catch (NullPointerException e) {
+            fail(FAIL_MSG_UEET);
+        } catch (IllegalDaysException e) {
+            // expected
+        }
+
+
+    }
+
+    @Test
     public void testConstructorNoException() {
         assertEquals(testSchedule.getDays(), MEETING_DAYS_MWF);
         assertEquals(testSchedule.getStartTime(), testStartTime);

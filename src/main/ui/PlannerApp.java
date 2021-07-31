@@ -200,18 +200,19 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads meeting days of course from user input
-    // FIXME: crushed and exited when entering wrong days
-    // TODO: simplifying the way of entering a list of booleans
     private void loadDays() {
         tempDays = new boolean[5];
-        System.out.println("\nNote: The meeting days should be five boolean values, separated by space.");
+        System.out.println("\nNote: The meeting days should be five consecutive T/F, with no spaces separated.");
         System.out.println("For example, if the meetings are on Mondays, Wednesdays, and Fridays, "
-                + "then enter 'true false true false true'.");
+                + "then enter \"TFTFT\".");
         System.out.println("Please enter the meeting days of the course: ");
-        for (int i = 0; i < 5; i++) {
-            tempDays[i] = input.nextBoolean();
+        try {
+            tempDays = Schedule.parseDays(input.next());
+            input.nextLine();
+        } catch (NullPointerException | IllegalDaysException e) {
+            System.err.println("[ERROR] Invalid meeting days! Please enter again.");
+            loadDays();
         }
-        input.nextLine();
     }
 
     // MODIFIES: this
@@ -268,7 +269,7 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads whether the course is required from user input
-    // FIXME: program crushed and exited when entering wrong format of time
+    // FIXME: program crushed and exited when entering wrong format of required
     // TODO: simplifying the process of entering a boolean value
     private void loadRequired() {
         System.out.println("\nIs this course required for your specialization (true/false)?");
