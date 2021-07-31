@@ -67,22 +67,82 @@ public class TimeTest extends ModelTest {
 
     @Test
     public void testParseHourNoException() {
-
+        try {
+            assertEquals(Time.parseHour("11:30"), 11);
+        } catch (IllegalTimeException e) {
+            fail(FAIL_MSG_UEET);
+        }
     }
 
     @Test
     public void testParseHourIllegalTimeException() {
+        try {
+            Time.parseHour("1130");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalTimeException e) {
+            // expected
+        }
 
+        try {
+            Time.parseHour("11a:30");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalTimeException e) {
+            // expected
+        }
+
+        try {
+            Time.parseHour("28:30");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalTimeException e) {
+            // expected
+        }
+
+        try {
+            Time.parseHour("-1:30");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalTimeException e) {
+            // expected
+        }
     }
 
     @Test
-    public void testParseMinuteNoExeption() {
-
+    public void testParseMinuteNoException() {
+        try {
+            assertEquals(Time.parseMinute("11:30"), 30);
+        } catch (IllegalTimeException e) {
+            fail(FAIL_MSG_UEET);
+        }
     }
 
     @Test
     public void testParseMinuteIllegalTimeException() {
+        try {
+            Time.parseMinute("1130");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalTimeException e) {
+            // expected
+        }
 
+        try {
+            Time.parseMinute("11:30am");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalTimeException e) {
+            // expected
+        }
+
+        try {
+            Time.parseMinute("11:65");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalTimeException e) {
+            // expected
+        }
+
+        try {
+            Time.parseMinute("11:-1");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalTimeException e) {
+            // expected
+        }
     }
 
     @Test
@@ -105,7 +165,7 @@ public class TimeTest extends ModelTest {
     }
 
     @Test
-    public void testToStringAM() {
+    public void testToString() {
         try {
             testTime = new Time(7, 30);
         } catch (IllegalTimeException e) {

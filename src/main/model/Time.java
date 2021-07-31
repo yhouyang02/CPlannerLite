@@ -2,6 +2,7 @@ package model;
 
 import exception.IllegalHourException;
 import exception.IllegalMinuteException;
+import exception.IllegalTimeException;
 
 // Represents a 24-hour time with hour and minute
 public class Time {
@@ -20,6 +21,48 @@ public class Time {
         }
         this.hour = hour;
         this.minute = minute;
+    }
+
+    // EFFECTS: parses string s as a time and returns the hour of the time;
+    //          throws IllegalTimeException when s is not in format of "HH:MM", where HH and MM are integers, and
+    //                                      when HH is not between 0 and 24
+    public static int parseHour(String s) throws IllegalTimeException {
+        int i = s.indexOf(":");
+        int hour;
+        if (i == -1) {
+            throw new IllegalTimeException();
+        } else {
+            try {
+                hour = Integer.parseInt(s.substring(0, i));
+            } catch (NumberFormatException e) {
+                throw new IllegalTimeException();
+            }
+            if (hour < 0 || hour > 24) {
+                throw new IllegalHourException();
+            }
+        }
+        return hour;
+    }
+
+    // EFFECTS: parses string s as a time and returns the minute of the time;
+    //          throws IllegalTimeException when s is not in format of "HH:MM", where HH and MM are integers, and
+    //                                      when MM is not between 0 and 60
+    public static int parseMinute(String s) throws IllegalTimeException {
+        int i = s.indexOf(":");
+        int minute;
+        if (i == -1) {
+            throw new IllegalTimeException();
+        } else {
+            try {
+                minute = Integer.parseInt(s.substring(i + 1));
+            } catch (NumberFormatException e) {
+                throw new IllegalTimeException();
+            }
+            if (minute < 0 || minute > 60) {
+                throw new IllegalMinuteException();
+            }
+        }
+        return minute;
     }
 
     // EFFECTS: returns the hour of this time
@@ -45,5 +88,4 @@ public class Time {
     public String toString() {
         return String.format("%02d", hour) + ":" + String.format("%02d", minute);
     }
-
 }

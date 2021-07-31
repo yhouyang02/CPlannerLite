@@ -207,8 +207,7 @@ public class PlannerApp {
                 + "then enter \"TFTFT\".");
         System.out.println("Please enter the meeting days of the course: ");
         try {
-            tempDays = Schedule.parseDays(input.next());
-            input.nextLine();
+            tempDays = Schedule.parseDays(input.nextLine());
         } catch (IllegalDaysException e) {
             System.err.println("[ERROR] Invalid meeting days! Please enter again.");
             loadDays();
@@ -217,10 +216,9 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads starting times of course from user input
-    // FIXME: program crushed and exited when entering wrong format of time
     private void loadStartTime() {
         System.out.println("\nPlease enter the start time of the course (in 24-hour format):");
-        String time = input.next();
+        String time = input.nextLine();
 
         int i = time.indexOf(":");
         int hour = Integer.parseInt(time.substring(0, i));
@@ -228,16 +226,16 @@ public class PlannerApp {
         try {
             tempStartTime = new Time(hour, minute);
         } catch (IllegalTimeException e) {
-            System.err.println("[ERROR] Invalid time! Please check your input.");
+            System.err.println("[ERROR] Invalid time! Please enter again.");
+            loadStartTime();
         }
     }
 
     // MODIFIES: this
     // EFFECTS: loads ending time of course from user input
-    // FIXME: program crushed and exited when entering wrong format of time
     private void loadEndTimes() {
         System.out.println("\nPlease enter the end time of the course (in 24-hour format):");
-        String time = input.next();
+        String time = input.nextLine();
 
         int i = time.indexOf(":");
         int hour = Integer.parseInt(time.substring(0, i));
@@ -245,7 +243,8 @@ public class PlannerApp {
         try {
             tempEndTime = new Time(hour, minute);
         } catch (IllegalTimeException e) {
-            System.err.println("[ERROR] Invalid time! Please check your input.");
+            System.err.println("[ERROR] Invalid time! Please enter again");
+            loadEndTimes();
         }
     }
 
