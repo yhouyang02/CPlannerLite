@@ -181,15 +181,20 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads subject, course, and section codes from user input
-    // TODO: improve the inputting logic
     private void loadCodes() {
         System.out.println("\nNote: The codes should be in format \"<subject> <course> <section>\". "
                 + "E.g., CPSC 210 921");
         System.out.println("Please enter the subject, course, and section codes of the course:");
-        tempSubjectCode = input.next();
-        tempCourseCode = input.next();
-        tempSectionCode = input.next();
-        input.nextLine();
+        String codes = input.nextLine();
+        try {
+            tempSubjectCode = Course.parseSubjectCode(codes);
+            tempCourseCode = Course.parseCourseCode(codes);
+            tempSectionCode = Course.parseSectionCode(codes);
+        } catch (IllegalCodesException e) {
+            System.err.println("[ERROR] Invalid code! Please enter again.");
+            loadCodes();
+        }
+
     }
 
     // MODIFIES: this

@@ -1,5 +1,6 @@
 package model;
 
+import exception.IllegalCodesException;
 import exception.IllegalDaysException;
 import exception.IllegalTimeException;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,6 +59,62 @@ public class CourseTest extends ModelTest {
             Course.parseRequired("A");
             fail(FAIL_MSG_EENT);
         } catch (IllegalArgumentException e) {
+            // expected
+        }
+    }
+
+    @Test
+    public void testParseCodesNoException() {
+        try {
+            assertEquals(Course.parseSubjectCode("CPSC 210 921"), "CPSC");
+            assertEquals(Course.parseCourseCode("CPSC 210 921"), "210");
+            assertEquals(Course.parseSectionCode("CPSC 210 921"), "921");
+        } catch (IllegalCodesException e) {
+            fail(FAIL_MSG_UEET);
+        }
+    }
+
+    @Test
+    public void testParseCodesIllegalCodesException() {
+        try {
+            Course.parseSubjectCode("CPSC210921");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalCodesException e) {
+            // expected
+        }
+
+        try {
+            Course.parseSubjectCode("CPSC210 921");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalCodesException e) {
+            // expected
+        }
+
+        try {
+            Course.parseCourseCode("CPSC210921");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalCodesException e) {
+            // expected
+        }
+
+        try {
+            Course.parseCourseCode("CPSC210 921");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalCodesException e) {
+            // expected
+        }
+
+        try {
+            Course.parseSectionCode("CPSC210921");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalCodesException e) {
+            // expected
+        }
+
+        try {
+            Course.parseSectionCode("CPSC210 921");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalCodesException e) {
             // expected
         }
     }

@@ -1,5 +1,7 @@
 package model;
 
+import exception.IllegalCodesException;
+
 // Represents a university course with course code, subject code, title,
 // section number, comments, and its special attributes for a student
 public class Course {
@@ -39,6 +41,40 @@ public class Course {
             throw new IllegalArgumentException();
         }
         return s.equalsIgnoreCase("T");
+    }
+
+    // EFFECTS: parses string s as codes and returns the subject code;
+    //          throws IllegalCodesException when s is not in format <subject> <course> <section>
+    public static String parseSubjectCode(String s) throws IllegalCodesException {
+        checkLegalCodes(s);
+        int i1 = s.indexOf(" ");
+        return s.substring(0, i1);
+    }
+
+    // EFFECTS: parses string s as codes and returns the course code;
+    //          throws IllegalCodesException when s is not in format <subject> <course> <section>
+    public static String parseCourseCode(String s) throws IllegalCodesException {
+        checkLegalCodes(s);
+        int i1 = s.indexOf(" ");
+        int i2 = s.indexOf(" ", i1 + 1);
+        return s.substring(i1 + 1, i2);
+    }
+
+    // EFFECTS: parses string s as codes and returns the section code;
+    //          throws IllegalCodesException when s is not in format <subject> <course> <section>
+    public static String parseSectionCode(String s) throws IllegalCodesException {
+        checkLegalCodes(s);
+        int i1 = s.indexOf(" ");
+        int i2 = s.indexOf(" ", i1 + 1);
+        return s.substring(i2 + 1);
+    }
+
+    // EFFECTS: throws IllegalCodeException when s is not in format <subject> <course> <section>;
+    //          otherwise, does nothing
+    private static void checkLegalCodes(String s) throws IllegalCodesException {
+        if (!s.contains(" ") || !s.substring(s.indexOf(" ") + 1).contains(" ")) {
+            throw new IllegalCodesException();
+        }
     }
 
     // EFFECTS: returns the subject code of this course
