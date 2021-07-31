@@ -4,7 +4,7 @@ package model;
 // section number, comments, and its special attributes for a student
 public class Course {
 
-    public static final int COMMON_CREDIT_LIMIT = 8;
+    public static final int CREDIT_LIMIT = 8;
 
     private String subjectCode;
     private String courseCode;
@@ -30,6 +30,15 @@ public class Course {
         this.credits = credits;
         this.required = required;
         this.starred = false;
+    }
+
+    // EFFECTS: returns true when s is "T", and false when s is "F", case-insensitive;
+    //          throws IllegalArgumentException when s is neither 'T' nor 'F', case-insensitive
+    public static boolean parseRequired(String s) throws IllegalArgumentException {
+        if (!s.equalsIgnoreCase("T") && !s.equalsIgnoreCase("F")) {
+            throw new IllegalArgumentException();
+        }
+        return s.equalsIgnoreCase("T");
     }
 
     // EFFECTS: returns the subject code of this course

@@ -41,6 +41,28 @@ public class CourseTest extends ModelTest {
     }
 
     @Test
+    public void testParseRequiredNoException() {
+        try {
+            assertTrue(Course.parseRequired("T"));
+            assertTrue(Course.parseRequired("t"));
+            assertFalse(Course.parseRequired("F"));
+            assertFalse(Course.parseRequired("f"));
+        } catch (IllegalArgumentException e) {
+            fail(FAIL_MSG_UEET);
+        }
+    }
+
+    @Test
+    public void testParseRequiredIllegalArgumentException() {
+        try {
+            Course.parseRequired("A");
+            fail(FAIL_MSG_EENT);
+        } catch (IllegalArgumentException e) {
+            // expected
+        }
+    }
+
+    @Test
     public void testSetComments() {
         assertEquals(testCourse.getComments(), "");
         testCourse.setComments("This course will be online.");

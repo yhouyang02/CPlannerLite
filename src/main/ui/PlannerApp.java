@@ -8,7 +8,7 @@ import model.Worklist;
 
 import java.util.Scanner;
 
-import static model.Worklist.RECOMMENDED_COURSE_LIMIT;
+import static model.Worklist.COURSE_LIMIT;
 
 // The course planner application to manage the worklist
 // Note: Some UI Functionality and methods are adjusted from TellerApp.java; Linked below:
@@ -163,8 +163,9 @@ public class PlannerApp {
         loadCredits();
         loadRequired();
         loadCourse();
-        if (worklist.getCourses().size() >= RECOMMENDED_COURSE_LIMIT) {
-            System.out.println("[WARNING] You already have " + worklist.getCourses().size() + " courses in worklist.");
+        if (worklist.getCourses().size() >= COURSE_LIMIT) {
+            System.out.println("[WARNING] You already have "
+                    + worklist.getCourses().size() + " courses in worklist.");
         }
         try {
             worklist.addCourse(tempCourse);
@@ -262,7 +263,7 @@ public class PlannerApp {
         System.out.println("\nHow many credit(s) do this course have?");
         try {
             tempCredits = Integer.parseInt(input.nextLine());
-            if (tempCredits >= Course.COMMON_CREDIT_LIMIT) {
+            if (tempCredits >= Course.CREDIT_LIMIT) {
                 System.out.println("\n[WARNING] Abnormal credit entered! Please make sure the credit is correct.");
             }
         } catch (NumberFormatException e) {
@@ -273,12 +274,14 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads whether the course is required from user input
-    // FIXME: program crushed and exited when entering wrong format of required
-    // TODO: simplifying the process of entering a boolean value
     private void loadRequired() {
-        System.out.println("\nIs this course required for your specialization (true/false)?");
-        tempRequired = input.nextBoolean();
-        input.nextLine();
+        System.out.println("\nIs this course required for your specialization (T/F)?");
+        try {
+            tempRequired = Course.parseRequired(input.nextLine());
+        } catch (IllegalArgumentException e) {
+            System.err.println("[ERROR] Invalid input! Please enter again");
+            loadRequired();
+        }
     }
 
     // MODIFIES: this
