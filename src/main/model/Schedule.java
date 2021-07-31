@@ -27,14 +27,11 @@ public class Schedule {
     }
 
     // EFFECTS: parses string s as a list of boolean with length == 5;
-    //          throws NullPointerException when s is null;
     //          throws IllegalDaysException when s does not have a length of 5, and
     //                                      when s is not completely composed of 'T' and 'F', case-insensitive
     public static boolean[] parseDays(String s) throws IllegalDaysException {
         boolean[] tempDays = new boolean[5];
-        if (s == null) {
-            throw new NullPointerException();
-        } else if (s.length() != 5) {
+        if (s.length() != 5) {
             throw new IllegalDaysException();
         } else {
             for (int i = 0; i < 5; i++) {

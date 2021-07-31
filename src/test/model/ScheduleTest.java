@@ -37,38 +37,21 @@ public class ScheduleTest extends ModelTest {
     }
 
     @Test
-    public void testParseDaysNullPointerException() {
-        try {
-            assertEquals(Schedule.parseDays(null).length, 5);
-        } catch (NullPointerException e) {
-            // expected
-        } catch (IllegalDaysException e) {
-            fail(FAIL_MSG_UEET);
-        }
-    }
-
-    @Test
     public void testParseDaysIllegalDaysException() {
         try {
             assertEquals(Schedule.parseDays("TFTFTF").length, 5);
-        } catch (NullPointerException e) {
-            fail(FAIL_MSG_UEET);
         } catch (IllegalDaysException e) {
             // expected
         }
 
         try {
             assertEquals(Schedule.parseDays("FTGTF").length, 5);
-        } catch (NullPointerException e) {
-            fail(FAIL_MSG_UEET);
         } catch (IllegalDaysException e) {
             // expected
         }
 
         try {
             assertEquals(Schedule.parseDays("ftgtf").length, 5);
-        } catch (NullPointerException e) {
-            fail(FAIL_MSG_UEET);
         } catch (IllegalDaysException e) {
             // expected
         }

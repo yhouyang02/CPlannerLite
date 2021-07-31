@@ -209,7 +209,7 @@ public class PlannerApp {
         try {
             tempDays = Schedule.parseDays(input.next());
             input.nextLine();
-        } catch (NullPointerException | IllegalDaysException e) {
+        } catch (IllegalDaysException e) {
             System.err.println("[ERROR] Invalid meeting days! Please enter again.");
             loadDays();
         }
