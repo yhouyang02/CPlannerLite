@@ -185,6 +185,7 @@ public class PlannerApp {
         System.out.println("\nNote: The codes should be in format \"<subject> <course> <section>\". "
                 + "E.g., CPSC 210 921");
         System.out.println("Please enter the subject, course, and section codes of the course:");
+        input.nextLine();
         String codes = input.nextLine();
         try {
             tempSubjectCode = Course.parseSubjectCode(codes);
@@ -194,7 +195,6 @@ public class PlannerApp {
             System.err.println("[ERROR] Invalid code! Please enter again.");
             loadCodes();
         }
-
     }
 
     // MODIFIES: this
@@ -302,58 +302,64 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: performs the action of deleting a course
-    // FIXME: expected CourseNotFoundException not thrown
     private void doDeleteCourse() {
         if (worklist.getCourses().isEmpty()) {
-            System.err.println("[ERROR] No courses in worklist! Please check your courses.");
+            System.err.println("[ERROR] No courses in worklist! Please check your worklist.");
         } else {
-            System.out.println("Please enter the subject and course codes of the course you want to delete:");
+            System.out.println("Please enter the subject, course, and section codes of the course you want to delete:");
             input.nextLine();
-            String code = input.nextLine();
-            for (Course c : worklist.getCourses()) {
-                if (c.getSubjectCourseCode().equals(code)) {
-                    try {
-                        worklist.deleteCourse(c);
-                    } catch (CourseNotFoundException e) {
-                        System.err.println("[ERROR] Course not found! Please check your input.");
-                    }
-                }
+            String codes = input.nextLine();
+            try {
+                worklist.deleteCourse(new Course(Course.parseSubjectCode(codes),
+                        Course.parseCourseCode(codes), Course.parseSectionCode(codes)));
+                System.out.println("\n" + tempCourse.getSubjectCourseCode() + " has been deleted from worklist.");
+            } catch (IllegalCodesException e) {
+                System.err.println("[ERROR] Invalid code! Please try again.");
+                doDeleteCourse();
+            } catch (CourseNotFoundException e) {
+                System.err.println("[ERROR] Course not found! Please check your worklist.");
             }
         }
     }
 
     // MODIFIES: this
     // EFFECTS: performs the action of starring a course
-    // FIXME: expected CourseNotFoundException not thrown
     private void doStarCourse() {
         if (worklist.getCourses().isEmpty()) {
-            System.err.println("[ERROR] No courses in worklist! Please check your courses.");
+            System.err.println("[ERROR] No courses in worklist! Please check your worklist.");
         } else {
-            System.out.println("Please enter the subject and course codes of the course you want to star:");
+            System.out.println("Please enter the subject, course, and section codes of the course you want to star:");
             input.nextLine();
-            String code = input.nextLine();
+            String codes = input.nextLine();
             try {
-                worklist.star(code);
+                worklist.star(new Course(Course.parseSubjectCode(codes),
+                        Course.parseCourseCode(codes), Course.parseSectionCode(codes)));
+            } catch (IllegalCodesException e) {
+                System.err.println("[ERROR] Invalid code! Please try again.");
+                doStarCourse();
             } catch (CourseNotFoundException e) {
-                System.err.println("[ERROR] Course not found! Please check your input.");
+                System.err.println("[ERROR] Course not found! Please check your worklist.");
             }
         }
     }
 
     // MODIFIES: this
     // EFFECTS: performs the action of starring a course
-    // FIXME: expected CourseNotFoundException not thrown
     private void doUnstarCourse() {
         if (worklist.getCourses().isEmpty()) {
-            System.err.println("[ERROR] No courses in worklist! Please check your courses.");
+            System.err.println("[ERROR] No courses in worklist! Please check your worklist.");
         } else {
-            System.out.println("Please enter the subject and course codes of the course you want to unstar:");
+            System.out.println("Please enter the subject, course, and section codes of the course you want to unstar:");
             input.nextLine();
-            String code = input.nextLine();
+            String codes = input.nextLine();
             try {
-                worklist.unstar(code);
+                worklist.unstar(new Course(Course.parseSubjectCode(codes),
+                        Course.parseCourseCode(codes), Course.parseSectionCode(codes)));
+            } catch (IllegalCodesException e) {
+                System.err.println("[ERROR] Invalid code! Please try again.");
+                doStarCourse();
             } catch (CourseNotFoundException e) {
-                System.err.println("[ERROR] Course not found! Please check your input.");
+                System.err.println("[ERROR] Course not found! Please check your worklist.");
             }
         }
     }

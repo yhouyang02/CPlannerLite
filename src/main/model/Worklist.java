@@ -40,8 +40,6 @@ public class Worklist {
     public void addCourse(Course course) throws CourseAlreadyExistsException, CourseConflictsException {
         if (courses.contains(course)) {
             throw new CourseAlreadyExistsException();
-        } else if (hasCourseWithCode(course.getSubjectCourseCode())) {
-            throw new CourseAlreadyExistsException();
         } else {
             for (Course c : courses) {
                 if (c.getSchedule().isOverlapping(course.getSchedule())) {
@@ -66,53 +64,31 @@ public class Worklist {
     // MODIFIES: this
     // EFFECTS: if no course with getSubjectCourseCode() equals code, throws CourseNotFoundException;
     //          otherwise, sets the course with the given code to required or not
-    public void setRequired(String code, boolean required) throws CourseNotFoundException {
-        if (!hasCourseWithCode(code)) {
+    public void setRequired(Course c, boolean required) throws CourseNotFoundException {
+        if (!courses.contains(c)) {
             throw new CourseNotFoundException();
         }
-        getCourseWithCode(code).setRequired(required);
+        courses.get(courses.indexOf(c)).setRequired(required);
     }
 
     // MODIFIES: this
-    // EFFECTS: if no course with getSubjectCourseCode() equals code exists, throws CourseNotFoundException;
+    // EFFECTS: throws CourseNotFoundException if courses does not contain c;
     //          otherwise, star the course with subject and course codes code in this.courses
-    public void star(String code) throws CourseNotFoundException {
-        if (!hasCourseWithCode(code)) {
+    public void star(Course c) throws CourseNotFoundException {
+        if (!courses.contains(c)) {
             throw new CourseNotFoundException();
         }
-        getCourseWithCode(code).star();
+        courses.get(courses.indexOf(c)).star();
     }
 
     // MODIFIES: this
-    // EFFECTS: if no course with getSubjectCourseCode() equals code exists, throws CourseNotFoundException;
+    // EFFECTS: throws CourseNotFoundException if courses does not contain c;
     //          otherwise, unstar the course with subject and course codes code in this.courses
-    public void unstar(String code) throws CourseNotFoundException {
-        if (!hasCourseWithCode(code)) {
+    public void unstar(Course c) throws CourseNotFoundException {
+        if (!courses.contains(c)) {
             throw new CourseNotFoundException();
         }
-        getCourseWithCode(code).unstar();
-    }
-
-    // EFFECTS: returns true if there exists a course with getSubjectCourseCode(), false otherwise
-    private boolean hasCourseWithCode(String code) {
-        for (Course c : courses) {
-            if (c.getSubjectCourseCode().equals(code)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // REQUIRES: there exists a course with getSubjectCourseCode() equals code in courses;
-    // EFFECTS: returns the course object with subject and course codes code
-    private Course getCourseWithCode(String code) {
-        Course course = null;
-        for (Course c : courses) {
-            if (c.getSubjectCourseCode().equals(code)) {
-                course = c;
-            }
-        }
-        return course;
+        courses.get(courses.indexOf(c)).unstar();
     }
 
     // EFFECTS: returns a list of starred courses in this worklist
