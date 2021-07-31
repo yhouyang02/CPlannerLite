@@ -159,4 +159,23 @@ public class CourseTest extends ModelTest {
                 "CPSC 210 102 - Software Construction\tMon Wed Fri \t13:00 - 14:00");
     }
 
+    @Test
+    public void testEquals() {
+        assertEquals(testCourse, new Course("CPSC", "210", "102"));
+        assertNotEquals(testCourse, new Course("CPSC", "210", "103"));
+        assertNotEquals(testCourse, new Course("CPSC", "213", "102"));
+        assertNotEquals(testCourse, new Course("MATH", "210", "102"));
+        assertEquals(testCourse, testCourse);
+        assertNotEquals(testCourse, null);
+        assertNotEquals(testCourse, new Object());
+    }
+
+    @Test
+    public void testHashCode() {
+        assertEquals(testCourse.hashCode(), new Course("CPSC", "210", "102").hashCode());
+        assertNotEquals(testCourse.hashCode(), new Course("CPSC", "210", "103").hashCode());
+        assertNotEquals(testCourse.hashCode(), new Course("CPSC", "213", "102").hashCode());
+        assertNotEquals(testCourse.hashCode(), new Course("MATH", "210", "102").hashCode());
+    }
+
 }

@@ -2,6 +2,8 @@ package model;
 
 import exception.IllegalCodesException;
 
+import java.util.Objects;
+
 // Represents a university course with course code, subject code, title,
 // section number, comments, and its special attributes for a student
 public class Course {
@@ -17,6 +19,14 @@ public class Course {
     private int credits;
     private boolean required;
     private boolean starred;
+
+    // EFFECTS: constructs a new course with subject code, subject code;
+    //          ONLY used to operate on courses
+    public Course(String subject, String course, String section) {
+        this.subjectCode = subject;
+        this.courseCode = course;
+        this.sectionCode = section;
+    }
 
     // EFFECTS: constructs a new course with subject code, subject code, course code,
     //          title, section, and whether it is required for the student, initialized
@@ -168,6 +178,29 @@ public class Course {
     public String toString() {
         return getSubjectCourseCode() + " " + sectionCode + " - "
                 + title + "\t" + schedule.toString();
+    }
+
+    // EFFECTS: returns true when the o has the same subject, course,
+    //          and section codes as this course, false otherwise
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Course course = (Course) o;
+        return subjectCode.equals(course.subjectCode)
+                && courseCode.equals(course.courseCode)
+                && sectionCode.equals(course.sectionCode);
+    }
+
+    // EFFECTS: returns the hash code of this object
+    @Override
+    public int hashCode() {
+        return Objects.hash(subjectCode, courseCode, sectionCode);
     }
 
 }
