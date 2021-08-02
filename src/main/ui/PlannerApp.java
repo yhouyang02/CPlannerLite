@@ -77,6 +77,7 @@ public class PlannerApp {
         String command;
         System.out.println("Do you want to load existing worklist from file? [Y/N]");
         command = input.next();
+        input.nextLine();
         if (command.equalsIgnoreCase("Y")) {
             loadWorklist();
         } else if (command.equalsIgnoreCase("N")) {
@@ -385,8 +386,10 @@ public class PlannerApp {
             input.nextLine();
             String codes = input.nextLine();
             try {
-                worklist.star(new Course(Course.parseSubjectCode(codes),
-                        Course.parseCourseCode(codes), Course.parseSectionCode(codes)));
+                Course tempCourse = new Course(Course.parseSubjectCode(codes),
+                        Course.parseCourseCode(codes), Course.parseSectionCode(codes));
+                worklist.star(tempCourse);
+                System.out.println("\n" + tempCourse.getSubjectCourseCode() + " has been starred.");
             } catch (IllegalCodesException e) {
                 System.err.println("[ERROR] Invalid code! Please try again.");
                 doStarCourse();
@@ -406,8 +409,10 @@ public class PlannerApp {
             input.nextLine();
             String codes = input.nextLine();
             try {
-                worklist.unstar(new Course(Course.parseSubjectCode(codes),
-                        Course.parseCourseCode(codes), Course.parseSectionCode(codes)));
+                Course tempCourse = new Course(Course.parseSubjectCode(codes),
+                        Course.parseCourseCode(codes), Course.parseSectionCode(codes));
+                worklist.unstar(tempCourse);
+                System.out.println("\n" + tempCourse.getSubjectCourseCode() + " has been unstarred.");
             } catch (IllegalCodesException e) {
                 System.err.println("[ERROR] Invalid code! Please try again.");
                 doStarCourse();
