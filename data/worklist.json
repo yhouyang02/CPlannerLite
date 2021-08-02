@@ -1,0 +1,49 @@
+{
+    "courses": [
+        {
+            "schedule": {
+                "endHour": 10,
+                "startHour": 7,
+                "days": [
+                    true,
+                    false,
+                    true,
+                    false,
+                    true
+                ],
+                "startMinute": 0,
+                "endMinute": 0
+            },
+            "starred": true,
+            "credits": 4,
+            "courseCode": "210",
+            "sectionCode": "921",
+            "title": "Software Construction",
+            "subjectCode": "CPSC",
+            "required": true
+        },
+        {
+            "schedule": {
+                "endHour": 14,
+                "startHour": 13,
+                "days": [
+                    false,
+                    true,
+                    false,
+                    true,
+                    false
+                ],
+                "startMinute": 0,
+                "endMinute": 0
+            },
+            "starred": true,
+            "credits": 3,
+            "courseCode": "121",
+            "sectionCode": "102",
+            "title": "Models of Computation",
+            "subjectCode": "CPSC",
+            "required": true
+        }
+    ],
+    "name": "2021WT1"
+}

@@ -5,7 +5,11 @@ import model.Course;
 import model.Schedule;
 import model.Time;
 import model.Worklist;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 import static model.Worklist.COURSE_LIMIT;
@@ -14,6 +18,8 @@ import static model.Worklist.COURSE_LIMIT;
 // Note: Some UI Functionality and methods are adjusted from TellerApp.java; Linked below:
 //       https://github.students.cs.ubc.ca/CPSC210/TellerAppNotRobust/blob/master/src/main/ca/ubc/cpsc210/bank/ui/TellerApp.java
 public class PlannerApp {
+
+    private static final String JSON_STORE = "./data/worklist.json";
 
     private Course tempCourse;
     private Schedule tempSchedule;
@@ -29,10 +35,15 @@ public class PlannerApp {
 
     private Worklist worklist;
     private Scanner input;
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
     // EFFECTS: runs the course planner application
     public PlannerApp() {
+        worklist = new Worklist("New Worklist");
         input = new Scanner(System.in);
+        jsonReader = new JsonReader(JSON_STORE);
+        jsonWriter = new JsonWriter(JSON_STORE);
         runPlannerApp();
     }
 
@@ -41,12 +52,9 @@ public class PlannerApp {
     private void runPlannerApp() {
         boolean toContinue = true;
         String command;
-        String name;
 
         System.out.println("Welcome to Course Planner!");
-        System.out.println("Please enter the name of your worklist:");
-        name = input.nextLine();
-        worklist = new Worklist(name);
+        processStartCommand();
 
         while (toContinue) {
             displayMainMenu();
@@ -54,10 +62,48 @@ public class PlannerApp {
             command = command.toLowerCase();
 
             if (command.equals("q")) {
+                processQuitCommand();
                 toContinue = false;
             } else {
                 processMainCommand(command);
             }
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: processes user command on the starting menu
+    private void processStartCommand() {
+        String command;
+        System.out.println("Do you want to load existing worklist from file? [Y/N]");
+        command = input.next();
+        if (command.equalsIgnoreCase("Y")) {
+            loadWorklist();
+        } else if (command.equalsIgnoreCase("N")) {
+            System.out.println("\nPlease enter the name of your worklist:");
+            String name = input.nextLine();
+            worklist = new Worklist(name);
+        } else {
+            System.err.println("[ERROR] Invalid selection!");
+            System.out.println();
+            processStartCommand();
+        }
+    }
+
+    // EFFECTS: processes user command to quiting
+    private void processQuitCommand() {
+        String command;
+        System.out.println("\nDo you want to save your worklist to file? [Y/N]");
+        command = input.next();
+        if (command.equalsIgnoreCase("Y")) {
+            saveWorklist();
+        } else if (command.equalsIgnoreCase("N")) {
+            System.out.println("\nPlease enter the name of your worklist:");
+            String name = input.nextLine();
+            worklist = new Worklist(name);
+        } else {
+            System.err.println("[ERROR] Invalid selection!");
+            System.out.println();
+            processQuitCommand();
         }
     }
 
@@ -66,8 +112,10 @@ public class PlannerApp {
         System.out.println("\nWorklist: " + worklist.getName());
         System.out.println("Main Menu - Select from:");
         System.out.println("\tc -> All courses");
-        System.out.println("\ts -> Starred courses");
+        System.out.println("\tr -> Starred courses");
         System.out.println("\tw -> Worklist statistics");
+        System.out.println("\tl -> Load worklist from file");
+        System.out.println("\ts -> Save worklist to file");
         System.out.println("\th -> Help");
         System.out.println("\tq -> Quit");
     }
@@ -79,11 +127,17 @@ public class PlannerApp {
             case "c":
                 doAllCourses();
                 break;
-            case "s":
+            case "r":
                 printStarredCourses();
                 break;
             case "w":
-                printStatistics(worklist);
+                printStatistics();
+                break;
+            case "l":
+                loadWorklist();
+                break;
+            case "s":
+                saveWorklist();
                 break;
             case "h":
                 displayHelpMenu();
@@ -302,6 +356,7 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: performs the action of deleting a course
+    // FIXME: NullPointerException thrown when trying to delete a course
     private void doDeleteCourse() {
         if (worklist.getCourses().isEmpty()) {
             System.err.println("[ERROR] No courses in worklist! Please check your worklist.");
@@ -378,7 +433,7 @@ public class PlannerApp {
     }
 
     // EFFECTS: prints out the number of all/starred/required/optional courses, total credits,
-    private void printStatistics(Worklist worklist) {
+    private void printStatistics() {
         System.out.println("\n### Worklist Statistics ###");
         if (worklist.getCourses().isEmpty()) {
             System.out.println("[WARNING] No courses in worklist!");
@@ -393,15 +448,40 @@ public class PlannerApp {
             }
             System.out.println("Credit(s): " + worklist.getTotalCredits());
         }
+    }
 
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadWorklist() {
+        try {
+            worklist = jsonReader.read();
+            System.out.println("\nWorklist <" + worklist.getName() + "> has been loaded from " + JSON_STORE);
+        } catch (IOException e) {
+            System.err.println("[ERROR] Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: saves worklist to file
+    private void saveWorklist() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(worklist);
+            jsonWriter.close();
+            System.out.println("\nWorklist <" + worklist.getName() + "> has been saved to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.err.println("[ERROR] Unable to write to file: " + JSON_STORE);
+        }
     }
 
     // EFFECTS: prints out help menu of options to user
     private void displayHelpMenu() {
         System.out.println("\n### Help Menu ###");
         System.out.println("c -> All [c]ourses: view, add, delete, star, and modify courses");
-        System.out.println("s -> [S]tarred courses: view starred courses");
+        System.out.println("r -> Sta[r]red courses: view starred courses");
         System.out.println("w -> [W]orklist statistics: view detailed course statistics");
+        System.out.println("l -> [L]oad worklist from file: "
+                + "load existing worklist from file to replace current worklist");
+        System.out.println("s -> [S]ave worklist to file: save current worklist to file to replace existing worklist");
         System.out.println("h -> [H]elp: display help menu");
         System.out.println("q -> [Q]uit: quit Course Planner");
     }
