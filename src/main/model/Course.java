@@ -1,12 +1,14 @@
 package model;
 
 import exception.IllegalCodesException;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.Objects;
 
 // Represents a university course with course code, subject code, title,
 // section number, comments, and its special attributes for a student
-public class Course {
+public class Course implements Writable {
 
     public static final int CREDIT_LIMIT = 8;
 
@@ -14,7 +16,6 @@ public class Course {
     private String courseCode;
     private String sectionCode;
     private String title;
-    private String comments;
     private Schedule schedule;
     private int credits;
     private boolean required;
@@ -37,11 +38,26 @@ public class Course {
         this.courseCode = course;
         this.sectionCode = section;
         this.title = title;
-        this.comments = "";
         this.schedule = schedule;
         this.credits = credits;
         this.required = required;
         this.starred = false;
+    }
+
+    // EFFECTS: constructs a new course with subject code, subject code, course code,
+    //          title, section, whether it is required for the student, and whether it
+    //          is starred by the student;
+    //          ONLY used to load courses
+    public Course(String subject, String course, String section, String title,
+                  Schedule schedule, int credits, boolean required, boolean starred) {
+        this.subjectCode = subject;
+        this.courseCode = course;
+        this.sectionCode = section;
+        this.title = title;
+        this.schedule = schedule;
+        this.credits = credits;
+        this.required = required;
+        this.starred = starred;
     }
 
     // EFFECTS: returns true when s is "T", and false when s is "F", case-insensitive;
@@ -105,17 +121,6 @@ public class Course {
     // EFFECTS: returns the title of this course
     public String getTitle() {
         return title;
-    }
-
-    // EFFECTS: returns the comment of this course
-    public String getComments() {
-        return comments;
-    }
-
-    // MODIFIES: this
-    // EFFECTS: sets this.comments to comments
-    public void setComments(String comments) {
-        this.comments = comments;
     }
 
     // EFFECTS: returns the schedule of this course
@@ -203,4 +208,18 @@ public class Course {
         return Objects.hash(subjectCode, courseCode, sectionCode);
     }
 
+    // EFFECTS: returns this course as a JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("subjectCode", subjectCode);
+        json.put("courseCode", courseCode);
+        json.put("sectionCode", sectionCode);
+        json.put("title", title);
+        json.put("schedule", schedule.toJson());
+        json.put("credits", credits);
+        json.put("required", required);
+        json.put("starred", starred);
+        return json;
+    }
 }

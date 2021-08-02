@@ -1,0 +1,71 @@
+{
+  "courses": [
+    {
+      "schedule": {
+        "endHour": 13,
+        "startHour": 12,
+        "days": [
+          true,
+          false,
+          true,
+          false,
+          true
+        ],
+        "startMinute": 0,
+        "endMinute": 0
+      },
+      "starred": true,
+      "credits": 3,
+      "courseCode": "208",
+      "sectionCode": "112",
+      "title": "Coordination Chemistry",
+      "subjectCode": "CHEM",
+      "required": true
+    },
+    {
+      "schedule": {
+        "endHour": 18,
+        "startHour": 17,
+        "days": [
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "startMinute": 0,
+        "endMinute": 30
+      },
+      "starred": true,
+      "credits": 3,
+      "courseCode": "140",
+      "sectionCode": "002",
+      "title": "Lifespan Motor Development",
+      "subjectCode": "KIN",
+      "required": false
+    },
+    {
+      "schedule": {
+        "endHour": 11,
+        "startHour": 9,
+        "days": [
+          false,
+          true,
+          false,
+          true,
+          false
+        ],
+        "startMinute": 30,
+        "endMinute": 0
+      },
+      "starred": false,
+      "credits": 4,
+      "courseCode": "200",
+      "sectionCode": "101",
+      "title": "Relativity and Quanta",
+      "subjectCode": "PHYS",
+      "required": true
+    }
+  ],
+  "name": "Test Worklist"
+}

@@ -1,0 +1,71 @@
+{
+    "courses": [
+        {
+            "schedule": {
+                "endHour": 13,
+                "startHour": 12,
+                "days": [
+                    true,
+                    false,
+                    true,
+                    false,
+                    true
+                ],
+                "startMinute": 0,
+                "endMinute": 0
+            },
+            "starred": true,
+            "credits": 4,
+            "courseCode": "221",
+            "sectionCode": "103",
+            "title": "Basic Algorithms and Data Structures",
+            "subjectCode": "CPSC",
+            "required": true
+        },
+        {
+            "schedule": {
+                "endHour": 18,
+                "startHour": 17,
+                "days": [
+                    false,
+                    true,
+                    false,
+                    true,
+                    false
+                ],
+                "startMinute": 0,
+                "endMinute": 30
+            },
+            "starred": false,
+            "credits": 4,
+            "courseCode": "213",
+            "sectionCode": "102",
+            "title": "Introduction to Computer Systems",
+            "subjectCode": "CPSC",
+            "required": true
+        },
+        {
+            "schedule": {
+                "endHour": 11,
+                "startHour": 9,
+                "days": [
+                    false,
+                    true,
+                    false,
+                    true,
+                    false
+                ],
+                "startMinute": 30,
+                "endMinute": 0
+            },
+            "starred": false,
+            "credits": 3,
+            "courseCode": "305A",
+            "sectionCode": "001",
+            "title": "Personality Psychology",
+            "subjectCode": "PSYC",
+            "required": false
+        }
+    ],
+    "name": "Test Worklist"
+}

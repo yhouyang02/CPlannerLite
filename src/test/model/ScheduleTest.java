@@ -5,8 +5,7 @@ import exception.IllegalTimeException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static model.Schedule.MEETING_DAYS_MTTF;
-import static model.Schedule.MEETING_DAYS_MWF;
+import static model.Schedule.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ScheduleTest extends ModelTest {
@@ -105,6 +104,41 @@ public class ScheduleTest extends ModelTest {
         assertTrue(testSchedule.hasMeeting(Weekday.WEDNESDAY));
         assertFalse(testSchedule.hasMeeting(Weekday.THURSDAY));
         assertTrue(testSchedule.hasMeeting(Weekday.FRIDAY));
+    }
+
+    @Test
+    public void testEquals() {
+        try {
+            assertEquals(testSchedule, new Schedule(MEETING_DAYS_MWF,
+                    new Time(10, 0), new Time(11, 0)));
+            assertNotEquals(testSchedule, new Schedule(MEETING_DAYS_TT,
+                    new Time(10, 0), new Time(11, 0)));
+            assertNotEquals(testSchedule, new Schedule(MEETING_DAYS_MWF,
+                    new Time(9, 0), new Time(11, 0)));
+            assertNotEquals(testSchedule, new Schedule(MEETING_DAYS_MWF,
+                    new Time(10, 0), new Time(12, 0)));
+            assertEquals(testSchedule, testSchedule);
+            assertNotEquals(testSchedule, null);
+            assertNotEquals(testSchedule, new Object());
+        } catch (IllegalDaysException | IllegalTimeException e) {
+            fail(FAIL_MSG_UEET);
+        }
+    }
+
+    @Test
+    public void testHashCode() {
+        try {
+            assertEquals(testSchedule.hashCode(), new Schedule(MEETING_DAYS_MWF,
+                    new Time(10, 0), new Time(11, 0)).hashCode());
+            assertNotEquals(testSchedule.hashCode(), new Schedule(MEETING_DAYS_TT,
+                    new Time(10, 0), new Time(11, 0)).hashCode());
+            assertNotEquals(testSchedule.hashCode(), new Schedule(MEETING_DAYS_MWF,
+                    new Time(9, 0), new Time(11, 0)).hashCode());
+            assertNotEquals(testSchedule.hashCode(), new Schedule(MEETING_DAYS_MWF,
+                    new Time(10, 0), new Time(12, 0)).hashCode());
+        } catch (IllegalDaysException | IllegalTimeException e) {
+            fail(FAIL_MSG_UEET);
+        }
     }
 
     @Test

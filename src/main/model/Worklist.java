@@ -3,6 +3,9 @@ package model;
 import exception.CourseAlreadyExistsException;
 import exception.CourseConflictsException;
 import exception.CourseNotFoundException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,7 +13,7 @@ import java.util.List;
 import java.util.Set;
 
 // Represents a worklist to manage courses
-public class Worklist {
+public class Worklist implements Writable {
 
     public static final int COURSE_LIMIT = 5;
 
@@ -152,6 +155,24 @@ public class Worklist {
             }
         }
         return num;
+    }
+
+    // EFFECTS: returns this worklist as a JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("courses", coursesToJson());
+        return json;
+    }
+
+    // EFFECTS: returns courses in this worklist as a JSON array
+    private JSONArray coursesToJson() {
+        JSONArray jsonArray = new JSONArray();
+        for (Course c : courses) {
+            jsonArray.put(c.toJson());
+        }
+        return jsonArray;
     }
 
 }

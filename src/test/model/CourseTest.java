@@ -34,7 +34,6 @@ public class CourseTest extends ModelTest {
         assertEquals(testCourse.getCourseCode(), "210");
         assertEquals(testCourse.getSectionCode(), "102");
         assertEquals(testCourse.getTitle(), "Software Construction");
-        assertEquals(testCourse.getComments(), "");
         assertEquals(testCourse.getCredits(), 4);
         assertEquals(testCourse.getSchedule(), testSchedule);
         assertTrue(testCourse.isRequired());
@@ -117,13 +116,6 @@ public class CourseTest extends ModelTest {
         } catch (IllegalCodesException e) {
             // expected
         }
-    }
-
-    @Test
-    public void testSetComments() {
-        assertEquals(testCourse.getComments(), "");
-        testCourse.setComments("This course will be online.");
-        assertEquals(testCourse.getComments(), "This course will be online.");
     }
 
     @Test

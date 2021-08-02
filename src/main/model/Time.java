@@ -4,6 +4,8 @@ import exception.IllegalHourException;
 import exception.IllegalMinuteException;
 import exception.IllegalTimeException;
 
+import java.util.Objects;
+
 // Represents a 24-hour time with hour and minute
 public class Time {
 
@@ -83,9 +85,27 @@ public class Time {
         return hour >= t.getHour();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Time time = (Time) o;
+        return hour == time.hour && minute == time.minute;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hour, minute);
+    }
+
     // EFFECTS: returns a string of time in format "HH:MM"
     @Override
     public String toString() {
         return String.format("%02d", hour) + ":" + String.format("%02d", minute);
     }
+
 }

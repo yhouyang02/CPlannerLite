@@ -165,6 +165,33 @@ public class TimeTest extends ModelTest {
     }
 
     @Test
+    public void testEquals() {
+        try {
+            testTime = new Time(6, 30);
+            assertEquals(testTime, new Time(6, 30));
+            assertNotEquals(testTime, new Time(7, 30));
+            assertNotEquals(testTime, new Time(6, 40));
+            assertEquals(testTime, testTime);
+            assertNotEquals(testTime, null);
+            assertNotEquals(testTime, new Object());
+        } catch (IllegalTimeException e) {
+            fail(FAIL_MSG_UEET);
+        }
+    }
+
+    @Test
+    public void testHashCode() {
+        try {
+            testTime = new Time(6, 30);
+            assertEquals(testTime.hashCode(), new Time(6, 30).hashCode());
+            assertNotEquals(testTime.hashCode(), new Time(7, 30).hashCode());
+            assertNotEquals(testTime.hashCode(), new Time(7, 40).hashCode());
+        } catch (IllegalTimeException e) {
+            fail(FAIL_MSG_UEET);
+        }
+    }
+
+    @Test
     public void testToString() {
         try {
             testTime = new Time(7, 30);

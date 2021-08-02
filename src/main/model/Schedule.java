@@ -1,10 +1,15 @@
 package model;
 
 import exception.IllegalDaysException;
+import org.json.JSONObject;
+import persistence.Writable;
+
+import java.util.Arrays;
+import java.util.Objects;
 
 // Represents the schedule of a university course with a
 // start time, an end time, and days of meeting (of a week)
-public class Schedule {
+public class Schedule implements Writable {
 
     // Common meeting days for university courses
     public static final boolean[] MEETING_DAYS_MWF = {true, false, true, false, true};
@@ -112,6 +117,39 @@ public class Schedule {
     // EFFECTS: returns a string of time period from startTime to EndTime in format "HH:MM - HH:MM"
     private String getTimeString() {
         return startTime.toString() + " - " + endTime.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Schedule schedule = (Schedule) o;
+        return Arrays.equals(days, schedule.days)
+                && startTime.equals(schedule.startTime)
+                && endTime.equals(schedule.endTime);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(startTime, endTime);
+        result = 31 * result + Arrays.hashCode(days);
+        return result;
+    }
+
+    // EFFECTS: returns this schedule as a JSON object
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("days", days);
+        json.put("startHour", startTime.getHour());
+        json.put("startMinute", startTime.getMinute());
+        json.put("endHour", endTime.getHour());
+        json.put("endMinute", endTime.getMinute());
+        return json;
     }
 
 }
