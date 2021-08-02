@@ -15,6 +15,7 @@ import java.util.Set;
 // Represents a worklist to manage courses
 public class Worklist implements Writable {
 
+    // Recommended maximum courses in a worklist, for generating reminder
     public static final int COURSE_LIMIT = 5;
 
     private String name;
@@ -26,20 +27,20 @@ public class Worklist implements Writable {
         this.courses = new ArrayList<>();
     }
 
-    // EFFECTS: returns the name of this worklist
+    // EFFECTS: returns name of this worklist
     public String getName() {
         return name;
     }
 
-    // EFFECTS: returns the list of courses of this worklist
+    // EFFECTS: returns list of courses of this worklist
     public List<Course> getCourses() {
         return courses;
     }
 
     // MODIFIES: this
-    // EFFECTS: if course or other courses with the same code exists in courses, throws CourseAlreadyExistsException;
-    //          if course has a overlapped schedule with any existing courses, throws CourseConflictsException;
-    //          otherwise, adds course to courses
+    // EFFECTS: adds course to courses;
+    //          throws CourseAlreadyExistsException if course is already existed in courses;
+    //          throws CourseConflictsException if the schedule of course overlaps with any existing courses
     public void addCourse(Course course) throws CourseAlreadyExistsException, CourseConflictsException {
         if (courses.contains(course)) {
             throw new CourseAlreadyExistsException();
@@ -50,13 +51,12 @@ public class Worklist implements Writable {
                 }
             }
         }
-
         courses.add(course);
     }
 
     // MODIFIES: this
-    // EFFECTS: if course is not in courses, throws CourseNotFoundException;
-    //          otherwise, removes course from courses
+    // EFFECTS: removes course from courses;
+    //          throws CourseNotFoundException if course is not in courses
     public void deleteCourse(Course course) throws CourseNotFoundException {
         if (courses.isEmpty() || !courses.contains(course)) {
             throw new CourseNotFoundException();
@@ -65,8 +65,8 @@ public class Worklist implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: if no course with getSubjectCourseCode() equals code, throws CourseNotFoundException;
-    //          otherwise, sets the course with the given code to required or not
+    // EFFECTS: sets course c to required or not;
+    //          throws CourseNotFoundException if courses does not contain c
     public void setRequired(Course c, boolean required) throws CourseNotFoundException {
         if (!courses.contains(c)) {
             throw new CourseNotFoundException();
@@ -75,8 +75,8 @@ public class Worklist implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: throws CourseNotFoundException if courses does not contain c;
-    //          otherwise, star the course with subject and course codes code in this.courses
+    // EFFECTS: star course c in courses;
+    //          throws CourseNotFoundException if courses does not contain c;
     public void star(Course c) throws CourseNotFoundException {
         if (!courses.contains(c)) {
             throw new CourseNotFoundException();
@@ -85,8 +85,8 @@ public class Worklist implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: throws CourseNotFoundException if courses does not contain c;
-    //          otherwise, unstar the course with subject and course codes code in this.courses
+    // EFFECTS: unstar course c in courses;
+    //          throws CourseNotFoundException if courses does not contain c;
     public void unstar(Course c) throws CourseNotFoundException {
         if (!courses.contains(c)) {
             throw new CourseNotFoundException();
@@ -94,7 +94,7 @@ public class Worklist implements Writable {
         courses.get(courses.indexOf(c)).unstar();
     }
 
-    // EFFECTS: returns a list of starred courses in this worklist
+    // EFFECTS: returns a list of starred courses in courses
     public List<Course> getStarredCourses() {
         List<Course> starredCourses = new ArrayList<>();
         for (Course c : courses) {
@@ -105,7 +105,7 @@ public class Worklist implements Writable {
         return starredCourses;
     }
 
-    // EFFECTS: returns the total credits of all courses in this.courses
+    // EFFECTS: returns the total credits of all courses in courses
     public int getTotalCredits() {
         int credits = 0;
         for (Course c : courses) {
@@ -114,7 +114,7 @@ public class Worklist implements Writable {
         return credits;
     }
 
-    // EFFECTS: returns a set of all subject code appeared in courses
+    // EFFECTS: returns a set of all subject codes appeared in courses
     public Set<String> getSubjectCodes() {
         Set<String> codes = new HashSet<>();
         for (Course c : courses) {
@@ -123,8 +123,8 @@ public class Worklist implements Writable {
         return codes;
     }
 
-    // EFFECTS: if there are no courses with the given subject code, returns 0;
-    //          otherwise, returns the number of courses with the subject code in courses
+    // EFFECTS: returns the number of courses with the given subject code;
+    //          returns 0 if there are no courses with the given subject code
     public int getNumCoursesOfSubject(String subject) {
         int num = 0;
         for (Course c : courses) {

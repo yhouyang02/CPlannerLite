@@ -6,8 +6,8 @@ import persistence.Writable;
 
 import java.util.Objects;
 
-// Represents a university course with course code, subject code, title,
-// section number, comments, and its special attributes for a student
+// Represents a university course with subject code, course code, section code,
+// title, schedule, credits, and its special attributes for the student
 public class Course implements Writable {
 
     public static final int CREDIT_LIMIT = 8;
@@ -22,7 +22,7 @@ public class Course implements Writable {
     private boolean starred;
 
     // EFFECTS: constructs a new course with subject code, subject code;
-    //          ONLY used to operate on courses
+    //          !!! ONLY used for operations on courses
     public Course(String subject, String course, String section) {
         this.subjectCode = subject;
         this.courseCode = course;
@@ -31,7 +31,7 @@ public class Course implements Writable {
 
     // EFFECTS: constructs a new course with subject code, subject code, course code,
     //          title, section, and whether it is required for the student, initialized
-    //          with empty comments and unstarred
+    //          with unstarred
     public Course(String subject, String course, String section, String title,
                   Schedule schedule, int credits, boolean required) {
         this.subjectCode = subject;
@@ -47,7 +47,7 @@ public class Course implements Writable {
     // EFFECTS: constructs a new course with subject code, subject code, course code,
     //          title, section, whether it is required for the student, and whether it
     //          is starred by the student;
-    //          ONLY used to load courses
+    //          !!! ONLY used to save/load courses
     public Course(String subject, String course, String section, String title,
                   Schedule schedule, int credits, boolean required, boolean starred) {
         this.subjectCode = subject;
@@ -60,7 +60,7 @@ public class Course implements Writable {
         this.starred = starred;
     }
 
-    // EFFECTS: returns true when s is "T", and false when s is "F", case-insensitive;
+    // EFFECTS: returns true if s is "T", and false if s is "F", case-insensitive;
     //          throws IllegalArgumentException when s is neither 'T' nor 'F', case-insensitive
     public static boolean parseRequired(String s) throws IllegalArgumentException {
         if (!s.equalsIgnoreCase("T") && !s.equalsIgnoreCase("F")) {
@@ -70,7 +70,7 @@ public class Course implements Writable {
     }
 
     // EFFECTS: parses string s as codes and returns the subject code;
-    //          throws IllegalCodesException when s is not in format <subject> <course> <section>
+    //          throws IllegalCodesException if s is not in format "<subject> <course> <section>"
     public static String parseSubjectCode(String s) throws IllegalCodesException {
         checkLegalCodes(s);
         int i1 = s.indexOf(" ");
@@ -78,7 +78,7 @@ public class Course implements Writable {
     }
 
     // EFFECTS: parses string s as codes and returns the course code;
-    //          throws IllegalCodesException when s is not in format <subject> <course> <section>
+    //          throws IllegalCodesException if s is not in format "<subject> <course> <section>"
     public static String parseCourseCode(String s) throws IllegalCodesException {
         checkLegalCodes(s);
         int i1 = s.indexOf(" ");
@@ -87,7 +87,7 @@ public class Course implements Writable {
     }
 
     // EFFECTS: parses string s as codes and returns the section code;
-    //          throws IllegalCodesException when s is not in format <subject> <course> <section>
+    //          throws IllegalCodesException if s is not in format "<subject> <course> <section>"
     public static String parseSectionCode(String s) throws IllegalCodesException {
         checkLegalCodes(s);
         int i1 = s.indexOf(" ");
@@ -95,40 +95,39 @@ public class Course implements Writable {
         return s.substring(i2 + 1);
     }
 
-    // EFFECTS: throws IllegalCodeException when s is not in format <subject> <course> <section>;
-    //          otherwise, does nothing
+    // EFFECTS: throws IllegalCodeException if s is not in format "<subject> <course> <section>"
     private static void checkLegalCodes(String s) throws IllegalCodesException {
         if (!s.contains(" ") || !s.substring(s.indexOf(" ") + 1).contains(" ")) {
             throw new IllegalCodesException();
         }
     }
 
-    // EFFECTS: returns the subject code of this course
+    // EFFECTS: returns subject code of this course
     public String getSubjectCode() {
         return subjectCode;
     }
 
-    // EFFECTS: returns the course code of this course
+    // EFFECTS: returns course code of this course
     public String getCourseCode() {
         return courseCode;
     }
 
-    // EFFECTS: returns the section code of this course
+    // EFFECTS: returns section code of this course
     public String getSectionCode() {
         return sectionCode;
     }
 
-    // EFFECTS: returns the title of this course
+    // EFFECTS: returns title of this course
     public String getTitle() {
         return title;
     }
 
-    // EFFECTS: returns the schedule of this course
+    // EFFECTS: returns schedule of this course
     public Schedule getSchedule() {
         return schedule;
     }
 
-    // EFFECTS: returns the credits of this course
+    // EFFECTS: returns credits of this course
     public int getCredits() {
         return credits;
     }
@@ -171,8 +170,8 @@ public class Course implements Writable {
         return false;
     }
 
-    // EFFECTS: returns a string of format "<subjectCode> <courseCode>";
-    //          e.g., "CPSC 210"
+    // EFFECTS: returns a string of subject code and course code in format
+    //          "<subjectCode> <courseCode>"; e.g., "CPSC 210"
     public String getSubjectCourseCode() {
         return subjectCode + " " + courseCode;
     }
@@ -185,9 +184,8 @@ public class Course implements Writable {
                 + title + "\t" + schedule.toString();
     }
 
-    // EFFECTS: returns true when the o has the same subject, course,
+    // EFFECTS: returns true if o has the same subject, course,
     //          and section codes as this course, false otherwise
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -202,7 +200,7 @@ public class Course implements Writable {
                 && sectionCode.equals(course.sectionCode);
     }
 
-    // EFFECTS: returns the hash code of this object
+    // EFFECTS: returns hash code of this course
     @Override
     public int hashCode() {
         return Objects.hash(subjectCode, courseCode, sectionCode);
@@ -222,4 +220,5 @@ public class Course implements Writable {
         json.put("starred", starred);
         return json;
     }
+
 }

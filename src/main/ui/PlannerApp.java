@@ -12,15 +12,15 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
-import static model.Worklist.COURSE_LIMIT;
-
-// The course planner application to manage the worklist
-// Note: Some UI Functionality and methods are adjusted from TellerApp.java; Linked below:
+// Represents the course planner application to manage worklist
+// Note: The UI functionality is adjusted from TellerApp.java; Linked below:
 //       https://github.students.cs.ubc.ca/CPSC210/TellerAppNotRobust/blob/master/src/main/ca/ubc/cpsc210/bank/ui/TellerApp.java
 public class PlannerApp {
 
+    // Path of JSON file for loading and saving worklist
     private static final String JSON_STORE = "./data/worklist.json";
 
+    // Temporary course information for adding a new course
     private Course tempCourse;
     private Schedule tempSchedule;
     private String tempSubjectCode;
@@ -38,7 +38,8 @@ public class PlannerApp {
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
 
-    // EFFECTS: runs the course planner application
+    // EFFECTS: initializes scanner, JSON reader, JSON writer, and a new worklist, then
+    //          runs the course planner application
     public PlannerApp() {
         worklist = new Worklist("New Worklist");
         input = new Scanner(System.in);
@@ -48,7 +49,7 @@ public class PlannerApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: processes user input
+    // EFFECTS: runs the course planner application to process user command
     private void runPlannerApp() {
         boolean toContinue = true;
         String command;
@@ -89,7 +90,7 @@ public class PlannerApp {
         }
     }
 
-    // EFFECTS: processes user command to quiting
+    // EFFECTS: processes user command when quiting
     private void processQuitCommand() {
         String command;
         System.out.println("\nDo you want to save your worklist to file? [Y/N]");
@@ -155,6 +156,7 @@ public class PlannerApp {
         processAllCoursesCommand(command);
     }
 
+    // EFFECTS: prints out all courses
     private void printAllCourses() {
         System.out.println("\n### Courses ###");
         if (worklist.getCourses().isEmpty()) {
@@ -213,7 +215,7 @@ public class PlannerApp {
         loadCredits();
         loadRequired();
         loadCourse();
-        if (worklist.getCourses().size() >= COURSE_LIMIT) {
+        if (worklist.getCourses().size() >= Worklist.COURSE_LIMIT) {
             System.out.println("[WARNING] You already have "
                     + worklist.getCourses().size() + " courses in worklist.");
         }
@@ -248,7 +250,7 @@ public class PlannerApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads course title from user input
+    // EFFECTS: loads title of course from user input
     private void loadTitle() {
         System.out.println("\nPlease enter the title of the course:");
         tempTitle = input.nextLine();
@@ -271,7 +273,7 @@ public class PlannerApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads starting times of course from user input
+    // EFFECTS: loads starting time of course from user input
     private void loadStartTime() {
         System.out.println("\nPlease enter the start time of the course (in 24-hour format):");
         String time = input.nextLine();
@@ -340,7 +342,7 @@ public class PlannerApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads Course from temporary values
+    // EFFECTS: loads course from temporary values
     private void loadCourse() {
         try {
             tempCourse = new Course(tempSubjectCode, tempCourseCode, tempSectionCode,
@@ -395,7 +397,7 @@ public class PlannerApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: performs the action of starring a course
+    // EFFECTS: performs the action of unstarring a course
     private void doUnstarCourse() {
         if (worklist.getCourses().isEmpty()) {
             System.err.println("[ERROR] No courses in worklist! Please check your worklist.");
@@ -428,7 +430,7 @@ public class PlannerApp {
         System.out.println("\nNote: If you want to make changes to the courses, select 'c' from the main menu.");
     }
 
-    // EFFECTS: prints out the number of all/starred/required/optional courses, total credits,
+    // EFFECTS: prints out the number of all/starred/required/optional courses, courses by subject, and total credits
     private void printStatistics() {
         System.out.println("\n### Worklist Statistics ###");
         if (worklist.getCourses().isEmpty()) {
@@ -447,7 +449,7 @@ public class PlannerApp {
     }
 
     // MODIFIES: this
-    // EFFECTS: loads workroom from file
+    // EFFECTS: loads worklist from file
     private void loadWorklist() {
         try {
             worklist = jsonReader.read();

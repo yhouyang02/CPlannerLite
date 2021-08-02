@@ -7,7 +7,7 @@ import persistence.Writable;
 import java.util.Arrays;
 import java.util.Objects;
 
-// Represents the schedule of a university course with a
+// Represents a schedule of a university course with a
 // start time, an end time, and days of meeting (of a week)
 public class Schedule implements Writable {
 
@@ -16,14 +16,15 @@ public class Schedule implements Writable {
     public static final boolean[] MEETING_DAYS_TT = {false, true, false, true, false};
     public static final boolean[] MEETING_DAYS_MTTF = {true, true, false, true, true};
 
+    // Strings of abbreviations for weekdays
     private static final String[] STR_WEEKDAY_ABBR = {"Mon", "Tue", "Wed", "Thu", "Fri"};
 
     private boolean[] days;
     private Time startTime;
     private Time endTime;
 
-    // EFFECTS: if days has a length other than 5, throws IllegalDaysException;
-    //          otherwise, constructs a new schedule with days of meeting, start time, and end time
+    // EFFECTS: constructs a new schedule with days of meeting, start time, and end time;
+    //          throws IllegalDaysException if days has a length other than 5
     public Schedule(boolean[] days, Time start, Time end) throws IllegalDaysException {
         if (days.length != 5) {
             throw new IllegalDaysException();
@@ -33,9 +34,9 @@ public class Schedule implements Writable {
         this.endTime = end;
     }
 
-    // EFFECTS: parses string s as a list of boolean with length == 5;
-    //          throws IllegalDaysException when s does not have a length of 5, and
-    //                                      when s is not completely composed of 'T' and 'F', case-insensitive
+    // EFFECTS: parses string s as a list of boolean representing meeting days;
+    //          throws IllegalDaysException if s does not have a length of 5, or
+    //                                      if s is not completely composed of 'T' and 'F', case-insensitive
     public static boolean[] parseDays(String s) throws IllegalDaysException {
         boolean[] tempDays = new boolean[5];
         if (s.length() != 5) {
@@ -53,17 +54,17 @@ public class Schedule implements Writable {
         return tempDays;
     }
 
-    // EFFECTS: returns the meeting days of this schedule
+    // EFFECTS: returns meeting days of this schedule
     public boolean[] getDays() {
         return days;
     }
 
-    // EFFECTS: returns the starting time of this schedule
+    // EFFECTS: returns starting time of this schedule
     public Time getStartTime() {
         return startTime;
     }
 
-    // EFFECTS: returns the ending time of this schedule
+    // EFFECTS: returns ending time of this schedule
     public Time getEndTime() {
         return endTime;
     }
@@ -80,7 +81,7 @@ public class Schedule implements Writable {
         return false;
     }
 
-    // EFFECTS: returns true if this schedule has meeting on the given day, false otherwise
+    // EFFECTS: returns true if this schedule has meeting on the given weekday, false otherwise
     public boolean hasMeeting(Weekday day) {
         switch (day) {
             case MONDAY:
@@ -96,7 +97,7 @@ public class Schedule implements Writable {
         }
     }
 
-    // EFFECTS: returns a string of schedule in format like "<days>\tHH:MM - HH:MM";
+    // EFFECTS: returns a string of schedule in format "<days>\tHH:MM - HH:MM";
     //          e.g., "Mon Wed Fri  12:00 - 13:00"
     @Override
     public String toString() {
@@ -114,11 +115,13 @@ public class Schedule implements Writable {
         return str;
     }
 
-    // EFFECTS: returns a string of time period from startTime to EndTime in format "HH:MM - HH:MM"
+    // EFFECTS: returns a string of time period from startTime to EndTime
+    //          in format "HH:MM - HH:MM"; e.g., "12:00 - 13:00"
     private String getTimeString() {
         return startTime.toString() + " - " + endTime.toString();
     }
 
+    // EFFECTS: returns true if o has the same days, startTime and endTime as this schedule, false otherwise
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -133,6 +136,7 @@ public class Schedule implements Writable {
                 && endTime.equals(schedule.endTime);
     }
 
+    // EFFECTS: returns hash code of this schedule
     @Override
     public int hashCode() {
         int result = Objects.hash(startTime, endTime);

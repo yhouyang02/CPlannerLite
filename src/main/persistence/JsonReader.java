@@ -20,20 +20,21 @@ public class JsonReader {
 
     private String source;
 
-    // EFFECTS: constructs a reader to read from source file
+    // EFFECTS: constructs a JSON reader to read from source file
     public JsonReader(String source) {
         this.source = source;
     }
 
-    // EFFECTS: reads workroom from file and returns it;
-    //          throws IOException if an error occurs reading data from file
+    // EFFECTS: reads worklist from file and returns it;
+    //          throws IOException if an error occurs when reading data from file
     public Worklist read() throws IOException {
         String jsonData = readFile(source);
         JSONObject jsonObject = new JSONObject(jsonData);
         return parseWorklist(jsonObject);
     }
 
-    // EFFECTS: reads source file as string and returns it
+    // EFFECTS: reads source file as string and returns it;
+    //          throws IOException if an error occurs when reading data from file
     private String readFile(String source) throws IOException {
         StringBuilder contentBuilder = new StringBuilder();
 
@@ -44,7 +45,8 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    // EFFECTS: parses worklist from JSON object and returns it
+    // EFFECTS: parses worklist from JSON object and returns it;
+    //          throws IOException if an error occurs when reading data from file
     private Worklist parseWorklist(JSONObject jsonObject) throws IOException {
         String name = jsonObject.getString("name");
         Worklist wl = new Worklist(name);
@@ -53,7 +55,8 @@ public class JsonReader {
     }
 
     // MODIFIES: wl
-    // EFFECTS: parses courses from JSON object and adds them to worklist
+    // EFFECTS: parses courses from JSON object and adds them to worklist;
+    //          throws IOException if an error occurs when reading data from file
     private void addCourses(Worklist wl, JSONObject jsonObject) throws IOException {
         JSONArray jsonArray = jsonObject.getJSONArray("courses");
         for (Object json : jsonArray) {
@@ -63,7 +66,8 @@ public class JsonReader {
     }
 
     // MODIFIES: wl
-    // EFFECTS: parses course from JSON object and adds it to worklist
+    // EFFECTS: parses course from JSON object and adds it to worklist;
+    //          throws IOException if an error occurs when reading data from file
     private void addCourse(Worklist wl, JSONObject jsonObject) throws IOException {
         try {
             String subjectCode = jsonObject.getString("subjectCode");
