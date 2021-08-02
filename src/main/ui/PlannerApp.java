@@ -96,11 +96,7 @@ public class PlannerApp {
         command = input.next();
         if (command.equalsIgnoreCase("Y")) {
             saveWorklist();
-        } else if (command.equalsIgnoreCase("N")) {
-            System.out.println("\nPlease enter the name of your worklist:");
-            String name = input.nextLine();
-            worklist = new Worklist(name);
-        } else {
+        } else if (!command.equalsIgnoreCase("N")) {
             System.err.println("[ERROR] Invalid selection!");
             System.out.println();
             processQuitCommand();
@@ -356,7 +352,6 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: performs the action of deleting a course
-    // FIXME: NullPointerException thrown when trying to delete a course
     private void doDeleteCourse() {
         if (worklist.getCourses().isEmpty()) {
             System.err.println("[ERROR] No courses in worklist! Please check your worklist.");
@@ -365,8 +360,9 @@ public class PlannerApp {
             input.nextLine();
             String codes = input.nextLine();
             try {
-                worklist.deleteCourse(new Course(Course.parseSubjectCode(codes),
-                        Course.parseCourseCode(codes), Course.parseSectionCode(codes)));
+                Course tempCourse = new Course(Course.parseSubjectCode(codes),
+                        Course.parseCourseCode(codes), Course.parseSectionCode(codes));
+                worklist.deleteCourse(tempCourse);
                 System.out.println("\n" + tempCourse.getSubjectCourseCode() + " has been deleted from worklist.");
             } catch (IllegalCodesException e) {
                 System.err.println("[ERROR] Invalid code! Please try again.");
