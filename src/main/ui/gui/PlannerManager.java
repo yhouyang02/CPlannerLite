@@ -109,7 +109,7 @@ public class PlannerManager {
         planner.setContentLabel(planner.getWorklist().getName() + " - All Courses");
         StringBuilder content = new StringBuilder();
         if (planner.getWorklist().getCourses().isEmpty()) {
-            String message = "No courses in worklist!";
+            String message = "No course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             for (Course c : planner.getWorklist().getCourses()) {
@@ -125,7 +125,7 @@ public class PlannerManager {
         planner.setContentLabel(planner.getWorklist().getName() + " - Starred Courses");
         StringBuilder content = new StringBuilder();
         if (planner.getWorklist().getStarredCourses().isEmpty()) {
-            String message = "No starred courses in worklist!";
+            String message = "No starred course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             for (Course c : planner.getWorklist().getStarredCourses()) {
@@ -141,7 +141,7 @@ public class PlannerManager {
         planner.setContentLabel(planner.getWorklist().getName() + " - Course Statistics");
         StringBuilder content = new StringBuilder();
         if (planner.getWorklist().getCourses().isEmpty()) {
-            String message = "No courses in worklist!";
+            String message = "No course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             content.append("Name: ").append(planner.getWorklist().getName()).append("\n");
@@ -170,7 +170,7 @@ public class PlannerManager {
         String title = "Delete..";
         Object[] allCodes = planner.getWorklist().getStarredCodes().toArray();
         if (planner.getWorklist().getCourses().isEmpty()) {
-            message = "No courses in worklist!";
+            message = "No course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             message = "Please choose the course you want to delete:";
@@ -197,7 +197,7 @@ public class PlannerManager {
         String title = "Star..";
         Object[] unstarredCodes = planner.getWorklist().getUnstarredCodes().toArray();
         if (planner.getWorklist().getCourses().isEmpty()) {
-            message = "No courses in worklist!";
+            message = "No course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             message = "Please choose the course you want to star:";
@@ -224,7 +224,7 @@ public class PlannerManager {
         String title = "Unstar..";
         Object[] starredCodes = planner.getWorklist().getStarredCodes().toArray();
         if (planner.getWorklist().getStarredCourses().isEmpty()) {
-            message = "No starred courses in worklist!";
+            message = "No starred course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
             message = "Please choose the course you want to unstar:";
