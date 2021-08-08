@@ -1,115 +1,115 @@
 {
-  "courses": [
-    {
-      "schedule": {
-        "endHour": 13,
-        "startHour": 9,
-        "days": [
-          false,
-          true,
-          false,
-          true,
-          false
-        ],
-        "startMinute": 30,
-        "endMinute": 0
-      },
-      "starred": true,
-      "credits": 4,
-      "courseCode": "210",
-      "sectionCode": "921",
-      "title": "Software Construction",
-      "subjectCode": "CPSC",
-      "required": true
-    },
-    {
-      "schedule": {
-        "endHour": 16,
-        "startHour": 13,
-        "days": [
-          true,
-          false,
-          true,
-          false,
-          true
-        ],
-        "startMinute": 30,
-        "endMinute": 0
-      },
-      "starred": true,
-      "credits": 3,
-      "courseCode": "320",
-      "sectionCode": "921",
-      "title": "Intermediate Algorithm Design and Analysis",
-      "subjectCode": "CPSC",
-      "required": true
-    },
-    {
-      "schedule": {
-        "endHour": 21,
-        "startHour": 18,
-        "days": [
-          false,
-          true,
-          false,
-          true,
-          false
-        ],
-        "startMinute": 0,
-        "endMinute": 0
-      },
-      "starred": false,
-      "credits": 3,
-      "courseCode": "251",
-      "sectionCode": "921",
-      "title": "Elementary Statistics",
-      "subjectCode": "STAT",
-      "required": true
-    },
-    {
-      "schedule": {
-        "endHour": 12,
-        "startHour": 9,
-        "days": [
-          true,
-          false,
-          true,
-          false,
-          false
-        ],
-        "startMinute": 0,
-        "endMinute": 0
-      },
-      "starred": false,
-      "credits": 3,
-      "courseCode": "308",
-      "sectionCode": "921",
-      "title": "Social Psychology",
-      "subjectCode": "PSYC",
-      "required": false
-    },
-    {
-      "schedule": {
-        "endHour": 19,
-        "startHour": 17,
-        "days": [
-          true,
-          false,
-          true,
-          false,
-          false
-        ],
-        "startMinute": 0,
-        "endMinute": 0
-      },
-      "starred": false,
-      "credits": 3,
-      "courseCode": "311",
-      "sectionCode": "921",
-      "title": "Psychology of Sport",
-      "subjectCode": "PSYC",
-      "required": false
-    }
-  ],
-  "name": "2021 ST2"
+    "courses": [
+        {
+            "schedule": {
+                "endHour": 13,
+                "startHour": 9,
+                "days": [
+                    false,
+                    true,
+                    false,
+                    true,
+                    false
+                ],
+                "startMinute": 30,
+                "endMinute": 0
+            },
+            "starred": true,
+            "credits": 4,
+            "courseCode": "210",
+            "sectionCode": "921",
+            "title": "Software Construction",
+            "subjectCode": "CPSC",
+            "required": true
+        },
+        {
+            "schedule": {
+                "endHour": 16,
+                "startHour": 13,
+                "days": [
+                    true,
+                    false,
+                    true,
+                    false,
+                    true
+                ],
+                "startMinute": 30,
+                "endMinute": 0
+            },
+            "starred": true,
+            "credits": 3,
+            "courseCode": "314",
+            "sectionCode": "921",
+            "title": "Computer Graphics",
+            "subjectCode": "CPSC",
+            "required": true
+        },
+        {
+            "schedule": {
+                "endHour": 21,
+                "startHour": 18,
+                "days": [
+                    false,
+                    true,
+                    false,
+                    true,
+                    false
+                ],
+                "startMinute": 0,
+                "endMinute": 0
+            },
+            "starred": false,
+            "credits": 3,
+            "courseCode": "251",
+            "sectionCode": "921",
+            "title": "Elementary Statistics",
+            "subjectCode": "STAT",
+            "required": true
+        },
+        {
+            "schedule": {
+                "endHour": 12,
+                "startHour": 9,
+                "days": [
+                    true,
+                    false,
+                    true,
+                    false,
+                    false
+                ],
+                "startMinute": 0,
+                "endMinute": 0
+            },
+            "starred": false,
+            "credits": 3,
+            "courseCode": "308",
+            "sectionCode": "921",
+            "title": "Social Psychology",
+            "subjectCode": "PSYC",
+            "required": false
+        },
+        {
+            "schedule": {
+                "endHour": 19,
+                "startHour": 17,
+                "days": [
+                    true,
+                    false,
+                    true,
+                    false,
+                    false
+                ],
+                "startMinute": 0,
+                "endMinute": 0
+            },
+            "starred": false,
+            "credits": 3,
+            "courseCode": "311",
+            "sectionCode": "921",
+            "title": "Psychology of Sport",
+            "subjectCode": "PSYC",
+            "required": false
+        }
+    ],
+    "name": "2021 ST2"
 }
