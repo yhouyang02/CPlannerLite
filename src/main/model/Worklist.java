@@ -77,7 +77,7 @@ public class Worklist implements Writable {
     // MODIFIES: this
     // EFFECTS: star course c in courses;
     //          throws CourseNotFoundException if courses does not contain c;
-    public void star(Course c) throws CourseNotFoundException {
+    public void starCourse(Course c) throws CourseNotFoundException {
         if (!courses.contains(c)) {
             throw new CourseNotFoundException();
         }
@@ -87,7 +87,7 @@ public class Worklist implements Writable {
     // MODIFIES: this
     // EFFECTS: unstar course c in courses;
     //          throws CourseNotFoundException if courses does not contain c;
-    public void unstar(Course c) throws CourseNotFoundException {
+    public void unstarCourse(Course c) throws CourseNotFoundException {
         if (!courses.contains(c)) {
             throw new CourseNotFoundException();
         }
@@ -99,6 +99,17 @@ public class Worklist implements Writable {
         List<Course> starredCourses = new ArrayList<>();
         for (Course c : courses) {
             if (c.isStarred()) {
+                starredCourses.add(c);
+            }
+        }
+        return starredCourses;
+    }
+
+    // EFFECTS: returns a list of unstarred courses in courses
+    public List<Course> getUnstarredCourses() {
+        List<Course> starredCourses = new ArrayList<>();
+        for (Course c : courses) {
+            if (!c.isStarred()) {
                 starredCourses.add(c);
             }
         }
@@ -119,6 +130,24 @@ public class Worklist implements Writable {
         Set<String> codes = new HashSet<>();
         for (Course c : courses) {
             codes.add(c.getSubjectCode());
+        }
+        return codes;
+    }
+
+    // EFFECTS: returns a set of subject, course, and section codes of starred courses
+    public Set<String> getStarredCodes() {
+        Set<String> codes = new HashSet<>();
+        for (Course c : getStarredCourses()) {
+            codes.add(c.getSubjectCourseCode() + " " + c.getSectionCode());
+        }
+        return codes;
+    }
+
+    // EFFECTS: returns a set of subject, course, and section codes of unstarred courses
+    public Set<String> getUnstarredCodes() {
+        Set<String> codes = new HashSet<>();
+        for (Course c : getUnstarredCourses()) {
+            codes.add(c.getSubjectCourseCode() + " " + c.getSectionCode());
         }
         return codes;
     }

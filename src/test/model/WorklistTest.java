@@ -186,14 +186,14 @@ class WorklistTest extends ModelTest {
         addValidCourses();
         assertFalse(testCourse1.isStarred());
         try {
-            testWorklist.star(new Course("CPSC", "221", "103"));
+            testWorklist.starCourse(new Course("CPSC", "221", "103"));
         } catch (CourseNotFoundException e) {
             fail(FAIL_MSG_UEET);
         }
         assertTrue(testCourse1.isStarred());
 
         try {
-            testWorklist.unstar(new Course("CPSC", "221", "103"));
+            testWorklist.unstarCourse(new Course("CPSC", "221", "103"));
         } catch (CourseNotFoundException e) {
             fail(FAIL_MSG_UEET);
         }
@@ -204,14 +204,14 @@ class WorklistTest extends ModelTest {
     public void testStarUnstarCourseNotFoundException() {
         addValidCourses();
         try {
-            testWorklist.star(new Course("MATH", "200", "101"));
+            testWorklist.starCourse(new Course("MATH", "200", "101"));
             fail(FAIL_MSG_EENT);
         } catch (CourseNotFoundException e) {
             // expected
         }
 
         try {
-            testWorklist.unstar(new Course("MATH", "200", "101"));
+            testWorklist.unstarCourse(new Course("MATH", "200", "101"));
             fail(FAIL_MSG_EENT);
         } catch (CourseNotFoundException e) {
             // expected
@@ -219,15 +219,16 @@ class WorklistTest extends ModelTest {
     }
 
     @Test
-    public void testGetStarredCourses() {
+    public void testGetStarredUnstarredCourses() {
         addValidCourses();
         try {
-            testWorklist.star(new Course("CPSC", "221", "103"));
-            testWorklist.star(new Course("CPSC", "213", "102"));
+            testWorklist.starCourse(new Course("CPSC", "221", "103"));
+            testWorklist.starCourse(new Course("CPSC", "213", "102"));
         } catch (Exception e) {
             fail(FAIL_MSG_UEET);
         }
         assertEquals(testWorklist.getStarredCourses().size(), 2);
+        assertEquals(testWorklist.getUnstarredCourses().size(), 1);
     }
 
     @Test
@@ -242,6 +243,24 @@ class WorklistTest extends ModelTest {
         assertEquals(testWorklist.getSubjectCodes().size(), 2);
         assertTrue(testWorklist.getSubjectCodes().contains("CPSC"));
         assertTrue(testWorklist.getSubjectCodes().contains("PSYC"));
+    }
+
+    @Test
+    public void testGetStarredUnstarredCodes() {
+        addValidCourses();
+        try {
+            testWorklist.starCourse(new Course("CPSC", "221", "103"));
+            testWorklist.starCourse(new Course("CPSC", "213", "102"));
+        } catch (Exception e) {
+            fail(FAIL_MSG_UEET);
+        }
+
+        assertEquals(testWorklist.getStarredCodes().size(), 2);
+        assertTrue(testWorklist.getStarredCodes().contains("CPSC 221 103"));
+        assertTrue(testWorklist.getStarredCodes().contains("CPSC 213 102"));
+
+        assertEquals(testWorklist.getUnstarredCodes().size(), 1);
+        assertTrue(testWorklist.getUnstarredCodes().contains("PSYC 305A 001"));
     }
 
     @Test

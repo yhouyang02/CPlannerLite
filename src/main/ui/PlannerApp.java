@@ -388,7 +388,7 @@ public class PlannerApp {
             try {
                 Course tempCourse = new Course(Course.parseSubjectCode(codes),
                         Course.parseCourseCode(codes), Course.parseSectionCode(codes));
-                worklist.star(tempCourse);
+                worklist.starCourse(tempCourse);
                 System.out.println("\n" + tempCourse.getSubjectCourseCode() + " has been starred.");
             } catch (IllegalCodesException e) {
                 System.err.println("[ERROR] Invalid code! Please try again.");
@@ -411,7 +411,7 @@ public class PlannerApp {
             try {
                 Course tempCourse = new Course(Course.parseSubjectCode(codes),
                         Course.parseCourseCode(codes), Course.parseSectionCode(codes));
-                worklist.unstar(tempCourse);
+                worklist.unstarCourse(tempCourse);
                 System.out.println("\n" + tempCourse.getSubjectCourseCode() + " has been unstarred.");
             } catch (IllegalCodesException e) {
                 System.err.println("[ERROR] Invalid code! Please try again.");
