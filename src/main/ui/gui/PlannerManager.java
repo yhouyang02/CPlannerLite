@@ -17,9 +17,9 @@ import java.io.IOException;
 public class PlannerManager {
 
     // Path of JSON file for loading and saving worklist
-    private static final String JSON_STORE = "./data/worklist.json";
+    private static final String JSON_PATH = "./data/worklist.json";
 
-    // Temporary course information for adding a new course
+    // Temporary course for adding a new course
     private Course tempCourse;
 
     private PlannerAppGUI planner;
@@ -27,12 +27,12 @@ public class PlannerManager {
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
 
-    // EFFECTS: constructs a manager to manage worklist of the planner
+    // EFFECTS: constructs a manager to manage worklist of the plannerApp
     public PlannerManager(PlannerAppGUI plannerApp) {
         planner = plannerApp;
         courseAdder = new CourseAdder();
-        jsonReader = new JsonReader(JSON_STORE);
-        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_PATH);
+        jsonWriter = new JsonWriter(JSON_PATH);
     }
 
     // MODIFIES: this
@@ -58,11 +58,11 @@ public class PlannerManager {
         try {
             planner.setWorklist(jsonReader.read());
 
-            String message = "Worklist <" + planner.getWorklist().getName() + "> has been loaded from " + JSON_STORE;
+            String message = "Worklist <" + planner.getWorklist().getName() + "> has been loaded from " + JSON_PATH;
             JOptionPane.showMessageDialog(planner, message);
         } catch (IOException e) {
             Toolkit.getDefaultToolkit().beep();
-            String message = "Unable to read from file: " + JSON_STORE;
+            String message = "Unable to read from file: " + JSON_PATH;
             JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
         }
         planner.setContentLabel("Worklist: " + planner.getWorklist().getName());
@@ -75,11 +75,11 @@ public class PlannerManager {
             jsonWriter.open();
             jsonWriter.write(planner.getWorklist());
             jsonWriter.close();
-            String message = "Worklist <" + planner.getWorklist().getName() + "> has been saved to " + JSON_STORE;
+            String message = "Worklist <" + planner.getWorklist().getName() + "> has been saved to " + JSON_PATH;
             JOptionPane.showMessageDialog(planner, message);
         } catch (FileNotFoundException e) {
             Toolkit.getDefaultToolkit().beep();
-            String message = "Unable to write to file: " + JSON_STORE;
+            String message = "Unable to write to file: " + JSON_PATH;
             JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -100,7 +100,7 @@ public class PlannerManager {
 
     // MODIFIES: this
     // EFFECTS: displays all courses on planner
-    public void doAllCourses() {
+    public void viewAllCourses() {
         planner.setContentLabel(planner.getWorklist().getName() + " - All Courses");
         StringBuilder content = new StringBuilder();
         if (planner.getWorklist().getCourses().isEmpty()) {
@@ -117,7 +117,7 @@ public class PlannerManager {
 
     // MODIFIES: this
     // EFFECTS: displays starred courses on planner
-    public void doStarredCourses() {
+    public void viewStarredCourses() {
         planner.setContentLabel(planner.getWorklist().getName() + " - Starred Courses");
         StringBuilder content = new StringBuilder();
         if (planner.getWorklist().getStarredCourses().isEmpty()) {
@@ -134,7 +134,7 @@ public class PlannerManager {
 
     // MODIFIES: this
     // EFFECTS: displays course statistics on planner
-    public void doCourseStatistics() {
+    public void viewCourseStatistics() {
         planner.setContentLabel(planner.getWorklist().getName() + " - Course Statistics");
         StringBuilder content = new StringBuilder();
         if (planner.getWorklist().getCourses().isEmpty()) {
@@ -157,7 +157,7 @@ public class PlannerManager {
 
     // MODIFIES: this
     // EFFECTS: performs the action of adding a course
-    public void doAdd() {
+    public void addCourse() {
         courseAdder = new CourseAdder();
         int command = JOptionPane.showConfirmDialog(planner, courseAdder, "Add Course",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -165,6 +165,8 @@ public class PlannerManager {
             loadCourse();
             try {
                 planner.getWorklist().addCourse(tempCourse);
+                String message = tempCourse.getSubjectCourseCode() + " has been added to worklist!";
+                JOptionPane.showMessageDialog(planner, message, "Add Course", JOptionPane.INFORMATION_MESSAGE);
             } catch (CourseAlreadyExistsException e) {
                 Toolkit.getDefaultToolkit().beep();
                 String message = "Course adding failed! "
@@ -177,7 +179,7 @@ public class PlannerManager {
                 JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
-        doAllCourses();
+        viewAllCourses();
     }
 
     // MODIFIES: this
@@ -197,7 +199,7 @@ public class PlannerManager {
 
     // EFFECTS: this
     // EFFECTS: performs the action of deleting a course
-    public void doDelete() {
+    public void deleteCourse() {
         String title = "Delete Course";
         Object[] allCodes = planner.getWorklist().getAllCodes().toArray();
         if (planner.getWorklist().getCourses().isEmpty()) {
@@ -220,12 +222,12 @@ public class PlannerManager {
                 }
             }
         }
-        doAllCourses();
+        viewAllCourses();
     }
 
     // MODIFIES: this
     // EFFECTS: performs the action of starring a course
-    public void doStar() {
+    public void starCourse() {
         String title = "Star Course";
         Object[] unstarredCodes = planner.getWorklist().getUnstarredCodes().toArray();
         if (planner.getWorklist().getCourses().isEmpty()) {
@@ -248,12 +250,12 @@ public class PlannerManager {
                 }
             }
         }
-        doStarredCourses();
+        viewStarredCourses();
     }
 
     // MODIFIES: this
     // EFFECTS: performs the action of unstarring a course
-    public void doUnstar() {
+    public void unstarCourse() {
         String title = "Unstar Course";
         Object[] starredCodes = planner.getWorklist().getStarredCodes().toArray();
         if (planner.getWorklist().getStarredCourses().isEmpty()) {
@@ -276,7 +278,7 @@ public class PlannerManager {
                 }
             }
         }
-        doStarredCourses();
+        viewStarredCourses();
     }
 
 }

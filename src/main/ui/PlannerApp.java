@@ -211,7 +211,7 @@ public class PlannerApp {
         loadTitle();
         loadDays();
         loadStartTime();
-        loadEndTimes();
+        loadEndTime();
         loadSchedule();
         loadCredits();
         loadRequired();
@@ -291,7 +291,7 @@ public class PlannerApp {
 
     // MODIFIES: this
     // EFFECTS: loads ending time of course from user input
-    private void loadEndTimes() {
+    private void loadEndTime() {
         System.out.println("\nPlease enter the end time of the course (in 24-hour format):");
         String time = input.nextLine();
 
@@ -301,7 +301,7 @@ public class PlannerApp {
             tempEndTime = new Time(hour, minute);
         } catch (IllegalTimeException e) {
             System.err.println("[ERROR] Invalid time! Please enter again");
-            loadEndTimes();
+            loadEndTime();
         }
     }
 

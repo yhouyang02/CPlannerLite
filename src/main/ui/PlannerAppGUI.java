@@ -19,17 +19,18 @@ import static ui.gui.FontManager.setFonts;
 // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
 public class PlannerAppGUI extends JFrame {
 
-    // Path of image and audio files
-    private static final String LOGO_STORE = "./data/logo.png";
+    // Path of logo image to be displayed on main window
+    private static final String LOGO_PATH = "./data/logo.png";
 
-    // Dimensions of the content area
-    private static final int ROWS = 20;
-    private static final int COLUMNS = 40;
+    // Dimensions of the text area
+    private static final int CONTENT_ROWS = 20;
+    private static final int CONTENT_COLUMNS = 40;
 
-    private Image logoImage;
+    // Graphical components
     private MenuBar menuBar;
     private JPanel contentPanel;
     private JLabel contentLabel;
+    private JLabel logoImageLabel;
     private JTextArea contentText;
     private JScrollPane scrollPane;
 
@@ -39,14 +40,14 @@ public class PlannerAppGUI extends JFrame {
 
     // EFFECTS: initializes and runs the application
     public PlannerAppGUI() {
-        super("Course Planner Lite");
+        super("CPlanner Lite");
         initFields();
         initGraphics();
         start();
     }
 
     // MODIFIES: this
-    // EFFECTS:  creates a default worklist, and initializes listener and manager
+    // EFFECTS: creates a default worklist, and initializes listener and manager
     private void initFields() {
         worklist = new Worklist("New Worklist");
         plannerListener = new PlannerListener(this);
@@ -54,8 +55,8 @@ public class PlannerAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS:  draws the JFrame window where this PlannerApp will operate, and populates the tools to be used
-    //           to perform actions on this worklist
+    // EFFECTS: draws the main window of the application, and populates the components
+    //          to be used to perform actions on this worklist
     private void initGraphics() {
         setFonts();
         setLayout(new BorderLayout());
@@ -69,10 +70,11 @@ public class PlannerAppGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes all components of the application
+    // EFFECTS: initializes all components of main window
     private void initComponents() {
         try {
-            logoImage = ImageIO.read(new File(LOGO_STORE));
+            Image logoImage = ImageIO.read(new File(LOGO_PATH));
+            logoImageLabel = new JLabel(new ImageIcon(logoImage));
         } catch (IOException e) {
             String message = "Failed to load logo image!";
             JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
@@ -88,19 +90,18 @@ public class PlannerAppGUI extends JFrame {
         contentLabel = new JLabel("Welcome to Course Planner!");
         contentLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        contentText = new JTextArea(ROWS, COLUMNS);
+        contentText = new JTextArea(CONTENT_ROWS, CONTENT_COLUMNS);
         contentText.setEditable(false);
         scrollPane = new JScrollPane(contentText);
 
-        JLabel imageLabel = new JLabel(new ImageIcon(logoImage));
 
         contentPanel.add(contentLabel, BorderLayout.NORTH);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
-        contentPanel.add(imageLabel, BorderLayout.SOUTH);
+        contentPanel.add(logoImageLabel, BorderLayout.SOUTH);
     }
 
     // MODIFIES: this
-    // EFFECTS: displays all components of the application
+    // EFFECTS: displays all components of main window
     private void displayComponents() {
         setJMenuBar(menuBar);
         add(contentPanel);

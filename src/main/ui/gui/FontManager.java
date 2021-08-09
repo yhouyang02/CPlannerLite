@@ -19,6 +19,7 @@ public class FontManager extends UIManager {
         put("CheckBox.font", messageFont);
         put("TextField.font", messageFont);
         put("RadioButton.font", messageFont);
+        put("ComboBox.font", messageFont);
 
         // Setting UI fonts
         put("OptionPane.buttonFont", UIFont);
@@ -30,4 +31,5 @@ public class FontManager extends UIManager {
         // Setting content fonts
         put("TextArea.font", contentFont);
     }
+    
 }

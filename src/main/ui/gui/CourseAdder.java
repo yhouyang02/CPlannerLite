@@ -13,9 +13,9 @@ import static ui.gui.FontManager.setFonts;
 // Represents the popup window for adding a course
 public class CourseAdder extends JPanel {
 
+    // Graphical components
     private JPanel upperInputPanel;
     private JPanel lowerInputPanel;
-
     private JTextField subjectInputTextField;
     private JTextField courseInputTextField;
     private JTextField sectionInputTextField;
@@ -23,13 +23,11 @@ public class CourseAdder extends JPanel {
     private JTextField creditInputTextField;
     private JTextField startTimeInputTextField;
     private JTextField endTimeInputTextField;
-
     private JCheckBox monCheckBox;
     private JCheckBox tueCheckBox;
     private JCheckBox wedCheckBox;
     private JCheckBox thuCheckBox;
     private JCheckBox friCheckBox;
-
     private JRadioButton requiredButton;
     private JRadioButton notRequiredButton;
 
@@ -49,7 +47,8 @@ public class CourseAdder extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the upper input panel
+    // EFFECTS: initializes the upper input panel, including the fields for subject, course,
+    //          section, title, credits, starting time, and ending time
     private void initUpperInputPanel() {
         upperInputPanel = new JPanel(new BorderLayout());
 
@@ -92,7 +91,7 @@ public class CourseAdder extends JPanel {
         endTimeInputTextField = new JTextField(10);
     }
 
-    // EFFECTS: returns a JPanel with inputLabel and a text field placed on it
+    // EFFECTS: returns a JPanel with label inputLabelStr and a text field
     private JPanel createInputPanel(String inputLabelStr, JTextField inputTextField) {
         JPanel inputPanel = new JPanel(new BorderLayout());
         JLabel inputLabel = new JLabel(inputLabelStr);
@@ -103,7 +102,8 @@ public class CourseAdder extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes the lower input panel
+    // EFFECTS: initializes the lower input panel, including the fields for meeting days
+    //          and whether the course is required for user
     private void initLowerInputPanel() {
         lowerInputPanel = new JPanel(new BorderLayout());
 
@@ -135,7 +135,7 @@ public class CourseAdder extends JPanel {
     }
 
     // MODIFIES: this
-    // EFFECTS: returns initialized input panel for requirement
+    // EFFECTS: returns initialized input panel for whether the course is required for user
     private JPanel makeRequiredInputPanel() {
         JPanel requiredInputPanel = new JPanel();
         requiredInputPanel.setLayout(new BoxLayout(requiredInputPanel, BoxLayout.X_AXIS));
@@ -174,11 +174,12 @@ public class CourseAdder extends JPanel {
         return sectionInputTextField.getText();
     }
 
+    // EFFECTS: returns the text entered in title field
     public String getTitleText() {
         return titleInputTextField.getText();
     }
 
-    // EFFECTS: returns the text entered in credits field
+    // EFFECTS: returns the schedule of the course constructed from user input
     public Schedule getSchedule() {
         Schedule tempSchedule = null;
         try {

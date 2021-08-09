@@ -4,13 +4,14 @@ import javax.swing.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
+// Represents the menu bar of main window
 public class MenuBar extends JMenuBar {
 
     private JMenu menu;
     private JMenuItem menuItem;
     private PlannerListener listener;
 
-    // EFFECTS: constructs the menu bar for this application and sets up a listener
+    // EFFECTS: constructs the menu bar for main window and sets up a listener
     public MenuBar(PlannerListener listener) {
         super();
         this.listener = listener;

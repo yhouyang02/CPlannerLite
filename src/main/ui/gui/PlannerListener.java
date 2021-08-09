@@ -2,7 +2,6 @@ package ui.gui;
 
 import ui.PlannerAppGUI;
 
-import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,9 +9,8 @@ import java.awt.event.ActionListener;
 public class PlannerListener implements ActionListener {
 
     private PlannerManager plannerManager;
-    private Timer timer;
 
-    // EFFECTS: constructs a listener to user actions of the planner
+    // EFFECTS: constructs a listener to user actions
     public PlannerListener(PlannerAppGUI planner) {
         plannerManager = new PlannerManager(planner);
     }
@@ -31,7 +29,7 @@ public class PlannerListener implements ActionListener {
     private void actionPerformedFile(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "new":
-                plannerManager.createNewWorklist();
+                plannerManager.newWorklist();
                 break;
             case "load":
                 plannerManager.loadWorklist();
@@ -51,13 +49,13 @@ public class PlannerListener implements ActionListener {
     private void actionPerformedView(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "allCourses":
-                plannerManager.doAllCourses();
+                plannerManager.viewAllCourses();
                 break;
             case "starredCourses":
-                plannerManager.doStarredCourses();
+                plannerManager.viewStarredCourses();
                 break;
             case "courseStatistics":
-                plannerManager.doCourseStatistics();
+                plannerManager.viewCourseStatistics();
                 break;
             default:
                 break;
@@ -69,19 +67,20 @@ public class PlannerListener implements ActionListener {
     private void actionPerformedCourse(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "add":
-                plannerManager.doAdd();
+                plannerManager.addCourse();
                 break;
             case "delete":
-                plannerManager.doDelete();
+                plannerManager.deleteCourse();
                 break;
             case "star":
-                plannerManager.doStar();
+                plannerManager.starCourse();
                 break;
             case "unstar":
-                plannerManager.doUnstar();
+                plannerManager.unstarCourse();
                 break;
             default:
                 break;
         }
     }
+
 }
