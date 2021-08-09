@@ -1,5 +1,7 @@
 package ui.gui;
 
+import exception.CourseAlreadyExistsException;
+import exception.CourseConflictsException;
 import model.Course;
 import model.Schedule;
 import model.Time;
@@ -32,25 +34,27 @@ public class PlannerManager {
     private boolean tempRequired;
 
     private PlannerAppGUI planner;
+    private CourseAdder courseAdder;
     private JsonReader jsonReader;
     private JsonWriter jsonWriter;
 
     // EFFECTS: constructs a manager to manage worklist of the planner
     public PlannerManager(PlannerAppGUI plannerApp) {
         planner = plannerApp;
+        courseAdder = new CourseAdder();
         jsonReader = new JsonReader(JSON_STORE);
         jsonWriter = new JsonWriter(JSON_STORE);
     }
 
     // MODIFIES: this
     // EFFECTS: lets user create a new worklist
-    public void createNewWorklist() {
+    public void newWorklist() {
         JLabel message = new JLabel("Please enter the name of your worklist:");
         String title = "New Worklist...";
 
         String name = (String) JOptionPane.showInputDialog(planner, message, title,
                 JOptionPane.QUESTION_MESSAGE, null, null, "New Worklist");
-        if (name != null) {
+        if (!name.equals("cancel")) {
             planner.setWorklist(new Worklist(name));
         } else {
             planner.setWorklist(new Worklist("New Worklist"));
@@ -160,14 +164,84 @@ public class PlannerManager {
     // MODIFIES: this
     // EFFECTS: performs the action of adding a course
     public void doAdd() {
-        // TODO: to implement the the action of adding a course
+        courseAdder = new CourseAdder();
+        int command = JOptionPane.showConfirmDialog(planner, courseAdder, "Add Course",
+                JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        if (command == 0) {
+            loadCourse();
+            try {
+                planner.getWorklist().addCourse(tempCourse);
+            } catch (CourseAlreadyExistsException e) {
+                System.err.println("[ERROR] Course adding failed! "
+                        + tempCourse.getSubjectCourseCode() + " is already in worklist.");
+            } catch (CourseConflictsException e) {
+                System.err.println("[ERROR] Course adding failed! "
+                        + tempCourse.getSubjectCourseCode() + " conflicts with an existing course.");
+            }
+        }
+        doAllCourses();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads course information to temporary values from user input,
+    //           and loads course from temporary values
+    private void loadCourse() {
+        loadCodes();
+        loadTitle();
+        loadDays();
+        loadTimes();
+        loadSchedule();
+        loadCredits();
+        loadRequired();
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads subject, course, and section codes from user input
+    private void loadCodes() {
+        
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads course title from user input
+    private void loadTitle() {
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads meeting days from user input
+    private void loadDays() {
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads starting and ending times from user input
+    private void loadTimes() {
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads course schedule from temporary values
+    private void loadSchedule() {
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads course credits from user input
+    private void loadCredits() {
+
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads whether the course is required from user input
+    private void loadRequired() {
+
     }
 
     // EFFECTS: this
     // EFFECTS: performs the action of deleting a course
     public void doDelete() {
         String message;
-        String title = "Delete..";
+        String title = "Delete Course";
         Object[] allCodes = planner.getWorklist().getStarredCodes().toArray();
         if (planner.getWorklist().getCourses().isEmpty()) {
             message = "No course in worklist!";
@@ -194,7 +268,7 @@ public class PlannerManager {
     // EFFECTS: performs the action of starring a course
     public void doStar() {
         String message;
-        String title = "Star..";
+        String title = "Star Course";
         Object[] unstarredCodes = planner.getWorklist().getUnstarredCodes().toArray();
         if (planner.getWorklist().getCourses().isEmpty()) {
             message = "No course in worklist!";
@@ -221,7 +295,7 @@ public class PlannerManager {
     // EFFECTS: performs the action of unstarring a course
     public void doUnstar() {
         String message;
-        String title = "Unstar..";
+        String title = "Unstar Course";
         Object[] starredCodes = planner.getWorklist().getStarredCodes().toArray();
         if (planner.getWorklist().getStarredCourses().isEmpty()) {
             message = "No starred course in worklist!";
@@ -243,5 +317,6 @@ public class PlannerManager {
         }
         doStarredCourses();
     }
+
 }
 
