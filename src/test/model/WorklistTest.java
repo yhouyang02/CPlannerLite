@@ -246,6 +246,15 @@ class WorklistTest extends ModelTest {
     }
 
     @Test
+    public void testGetAllCodes() {
+        addValidCourses();
+        assertEquals(testWorklist.getAllCodes().size(), 3);
+        assertTrue(testWorklist.getAllCodes().contains("CPSC 221 103"));
+        assertTrue(testWorklist.getAllCodes().contains("CPSC 213 102"));
+        assertTrue(testWorklist.getAllCodes().contains("PSYC 305A 001"));
+    }
+
+    @Test
     public void testGetStarredUnstarredCodes() {
         addValidCourses();
         try {

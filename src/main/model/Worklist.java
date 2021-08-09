@@ -134,6 +134,15 @@ public class Worklist implements Writable {
         return codes;
     }
 
+    // EFFECTS: returns a set of subject, course, and section codes of all courses
+    public Set<String> getAllCodes() {
+        Set<String> codes = new HashSet<>();
+        for (Course c : courses) {
+            codes.add(c.getSubjectCourseCode() + " " + c.getSectionCode());
+        }
+        return codes;
+    }
+
     // EFFECTS: returns a set of subject, course, and section codes of starred courses
     public Set<String> getStarredCodes() {
         Set<String> codes = new HashSet<>();
