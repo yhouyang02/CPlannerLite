@@ -76,6 +76,7 @@ public class PlannerAppGUI extends JFrame {
         } catch (IOException e) {
             String message = "Failed to load logo image!";
             JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+            Toolkit.getDefaultToolkit().beep();
         }
 
         menuBar = new MenuBar(plannerListener);

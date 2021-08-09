@@ -3,14 +3,13 @@ package ui.gui;
 import exception.CourseAlreadyExistsException;
 import exception.CourseConflictsException;
 import model.Course;
-import model.Schedule;
-import model.Time;
 import model.Worklist;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 import ui.PlannerAppGUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
@@ -22,16 +21,6 @@ public class PlannerManager {
 
     // Temporary course information for adding a new course
     private Course tempCourse;
-    private Schedule tempSchedule;
-    private String tempSubjectCode;
-    private String tempCourseCode;
-    private String tempSectionCode;
-    private String tempTitle;
-    private boolean[] tempDays;
-    private Time tempStartTime;
-    private Time tempEndTime;
-    private int tempCredits;
-    private boolean tempRequired;
 
     private PlannerAppGUI planner;
     private CourseAdder courseAdder;
@@ -72,6 +61,7 @@ public class PlannerManager {
             String message = "Worklist <" + planner.getWorklist().getName() + "> has been loaded from " + JSON_STORE;
             JOptionPane.showMessageDialog(planner, message);
         } catch (IOException e) {
+            Toolkit.getDefaultToolkit().beep();
             String message = "Unable to read from file: " + JSON_STORE;
             JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -88,6 +78,7 @@ public class PlannerManager {
             String message = "Worklist <" + planner.getWorklist().getName() + "> has been saved to " + JSON_STORE;
             JOptionPane.showMessageDialog(planner, message);
         } catch (FileNotFoundException e) {
+            Toolkit.getDefaultToolkit().beep();
             String message = "Unable to write to file: " + JSON_STORE;
             JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -113,6 +104,7 @@ public class PlannerManager {
         planner.setContentLabel(planner.getWorklist().getName() + " - All Courses");
         StringBuilder content = new StringBuilder();
         if (planner.getWorklist().getCourses().isEmpty()) {
+            Toolkit.getDefaultToolkit().beep();
             String message = "No course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -129,6 +121,7 @@ public class PlannerManager {
         planner.setContentLabel(planner.getWorklist().getName() + " - Starred Courses");
         StringBuilder content = new StringBuilder();
         if (planner.getWorklist().getStarredCourses().isEmpty()) {
+            Toolkit.getDefaultToolkit().beep();
             String message = "No starred course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -145,6 +138,7 @@ public class PlannerManager {
         planner.setContentLabel(planner.getWorklist().getName() + " - Course Statistics");
         StringBuilder content = new StringBuilder();
         if (planner.getWorklist().getCourses().isEmpty()) {
+            Toolkit.getDefaultToolkit().beep();
             String message = "No course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
@@ -172,10 +166,12 @@ public class PlannerManager {
             try {
                 planner.getWorklist().addCourse(tempCourse);
             } catch (CourseAlreadyExistsException e) {
+                Toolkit.getDefaultToolkit().beep();
                 String message = "Course adding failed! "
                         + tempCourse.getSubjectCourseCode() + " is already in worklist.";
                 JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
             } catch (CourseConflictsException e) {
+                Toolkit.getDefaultToolkit().beep();
                 String message = "Course adding failed! "
                         + tempCourse.getSubjectCourseCode() + " conflicts with an existing course.";
                 JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
@@ -202,14 +198,14 @@ public class PlannerManager {
     // EFFECTS: this
     // EFFECTS: performs the action of deleting a course
     public void doDelete() {
-        String message;
         String title = "Delete Course";
         Object[] allCodes = planner.getWorklist().getAllCodes().toArray();
         if (planner.getWorklist().getCourses().isEmpty()) {
-            message = "No course in worklist!";
+            Toolkit.getDefaultToolkit().beep();
+            String message = "No course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            message = "Please choose the course you want to delete:";
+            String message = "Please choose the course you want to delete:";
             String codes = (String) JOptionPane.showInputDialog(planner, message, title,
                     JOptionPane.QUESTION_MESSAGE, null, allCodes, "New Worklist");
             if (!codes.equals("cancel")) {
@@ -218,6 +214,7 @@ public class PlannerManager {
                             Course.parseCourseCode(codes), Course.parseSectionCode(codes));
                     planner.getWorklist().deleteCourse(tempCourse);
                 } catch (Exception e) {
+                    Toolkit.getDefaultToolkit().beep();
                     message = "Failed to delete the course!";
                     JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -229,14 +226,14 @@ public class PlannerManager {
     // MODIFIES: this
     // EFFECTS: performs the action of starring a course
     public void doStar() {
-        String message;
         String title = "Star Course";
         Object[] unstarredCodes = planner.getWorklist().getUnstarredCodes().toArray();
         if (planner.getWorklist().getCourses().isEmpty()) {
-            message = "No course in worklist!";
+            Toolkit.getDefaultToolkit().beep();
+            String message = "No course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            message = "Please choose the course you want to star:";
+            String message = "Please choose the course you want to star:";
             String codes = (String) JOptionPane.showInputDialog(planner, message, title,
                     JOptionPane.QUESTION_MESSAGE, null, unstarredCodes, "New Worklist");
             if (!codes.equals("cancel")) {
@@ -245,6 +242,7 @@ public class PlannerManager {
                             Course.parseCourseCode(codes), Course.parseSectionCode(codes));
                     planner.getWorklist().starCourse(tempCourse);
                 } catch (Exception e) {
+                    Toolkit.getDefaultToolkit().beep();
                     message = "Failed to star the course!";
                     JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
                 }
@@ -256,14 +254,14 @@ public class PlannerManager {
     // MODIFIES: this
     // EFFECTS: performs the action of unstarring a course
     public void doUnstar() {
-        String message;
         String title = "Unstar Course";
         Object[] starredCodes = planner.getWorklist().getStarredCodes().toArray();
         if (planner.getWorklist().getStarredCourses().isEmpty()) {
-            message = "No starred course in worklist!";
+            Toolkit.getDefaultToolkit().beep();
+            String message = "No starred course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
         } else {
-            message = "Please choose the course you want to unstar:";
+            String message = "Please choose the course you want to unstar:";
             String codes = (String) JOptionPane.showInputDialog(planner, message, title,
                     JOptionPane.QUESTION_MESSAGE, null, starredCodes, "New Worklist");
             if (!codes.equals("cancel")) {
@@ -272,6 +270,7 @@ public class PlannerManager {
                             Course.parseCourseCode(codes), Course.parseSectionCode(codes));
                     planner.getWorklist().unstarCourse(tempCourse);
                 } catch (Exception e) {
+                    Toolkit.getDefaultToolkit().beep();
                     message = "Failed to unstar the course!";
                     JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
                 }

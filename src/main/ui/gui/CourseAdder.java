@@ -190,9 +190,11 @@ public class CourseAdder extends JPanel {
             Time tempEndTime = new Time(tempEndHour, tempEndMinute);
             tempSchedule = new Schedule(getDays(), tempStartTime, tempEndTime);
         } catch (IllegalTimeException e) {
+            Toolkit.getDefaultToolkit().beep();
             String message = "Invalid time!";
             JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
         } catch (IllegalDaysException e) {
+            Toolkit.getDefaultToolkit().beep();
             String message = "Invalid meeting days!";
             JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -230,6 +232,7 @@ public class CourseAdder extends JPanel {
         try {
             credit = Integer.parseInt(creditInputTextField.getText());
         } catch (NumberFormatException e) {
+            Toolkit.getDefaultToolkit().beep();
             String message = "Invalid credit number!";
             JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
         }
