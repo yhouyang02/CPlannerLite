@@ -16,6 +16,8 @@ public class FontManager extends UIManager {
         put("OptionPane.font", messageFont);
         put("OptionPane.messageFont", messageFont);
         put("Label.font", messageFont);
+        put("CheckBox.font", messageFont);
+        put("TextField.font", messageFont);
 
         // Setting UI fonts
         put("OptionPane.buttonFont", UIFont);
