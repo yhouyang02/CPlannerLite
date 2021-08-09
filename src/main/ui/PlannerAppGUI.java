@@ -5,21 +5,28 @@ import ui.gui.MenuBar;
 import ui.gui.PlannerListener;
 import ui.gui.PlannerManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 import static ui.gui.FontManager.setFonts;
 
-// Represents the course planner application with GUI
+// Represents the main window of the course planner application
 // Note: GUI is adjusted from DrawingEditor.java and The Java™ Tutorials; Linked below:
 // https://github.students.cs.ubc.ca/CPSC210/SimpleDrawingPlayer-Complete/blob/master/src/ui/DrawingEditor.java
 // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
 public class PlannerAppGUI extends JFrame {
 
+    // Path of image and audio files
+    private static final String LOGO_STORE = "./data/logo.png";
+
     // Dimensions of the content area
-    private static final int ROWS = 30;
+    private static final int ROWS = 20;
     private static final int COLUMNS = 40;
 
+    private Image logoImage;
     private MenuBar menuBar;
     private JPanel contentPanel;
     private JLabel contentLabel;
@@ -64,25 +71,31 @@ public class PlannerAppGUI extends JFrame {
     // MODIFIES: this
     // EFFECTS: initializes all components of the application
     private void initComponents() {
+        try {
+            logoImage = ImageIO.read(new File(LOGO_STORE));
+        } catch (IOException e) {
+            String message = "Failed to load logo image!";
+            JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
         menuBar = new MenuBar(plannerListener);
 
-        // Creates the content panel for label and text
         contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(Color.WHITE);
         contentPanel.setOpaque(true);
 
-        // Creates the label of the text
         contentLabel = new JLabel("Welcome to Course Planner!");
         contentLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Creates a scrollable text area
         contentText = new JTextArea(ROWS, COLUMNS);
         contentText.setEditable(false);
         scrollPane = new JScrollPane(contentText);
 
-        // Adds content label and text area to the panel
+        JLabel imageLabel = new JLabel(new ImageIcon(logoImage));
+
         contentPanel.add(contentLabel, BorderLayout.NORTH);
         contentPanel.add(scrollPane, BorderLayout.CENTER);
+        contentPanel.add(imageLabel, BorderLayout.SOUTH);
     }
 
     // MODIFIES: this
@@ -104,7 +117,7 @@ public class PlannerAppGUI extends JFrame {
         if (command == JOptionPane.YES_OPTION) {
             plannerManager.loadWorklist();
         } else {
-            plannerManager.createNewWorklist();
+            plannerManager.newWorklist();
         }
     }
 
@@ -130,4 +143,5 @@ public class PlannerAppGUI extends JFrame {
     public void setContentText(String text) {
         contentText.setText(text);
     }
+
 }

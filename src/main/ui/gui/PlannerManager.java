@@ -172,11 +172,13 @@ public class PlannerManager {
             try {
                 planner.getWorklist().addCourse(tempCourse);
             } catch (CourseAlreadyExistsException e) {
-                System.err.println("[ERROR] Course adding failed! "
-                        + tempCourse.getSubjectCourseCode() + " is already in worklist.");
+                String message = "Course adding failed! "
+                        + tempCourse.getSubjectCourseCode() + " is already in worklist.";
+                JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
             } catch (CourseConflictsException e) {
-                System.err.println("[ERROR] Course adding failed! "
-                        + tempCourse.getSubjectCourseCode() + " conflicts with an existing course.");
+                String message = "Course adding failed! "
+                        + tempCourse.getSubjectCourseCode() + " conflicts with an existing course.";
+                JOptionPane.showMessageDialog(planner, message, "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
         doAllCourses();
@@ -186,55 +188,15 @@ public class PlannerManager {
     // EFFECTS: loads course information to temporary values from user input,
     //           and loads course from temporary values
     private void loadCourse() {
-        loadCodes();
-        loadTitle();
-        loadDays();
-        loadTimes();
-        loadSchedule();
-        loadCredits();
-        loadRequired();
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads subject, course, and section codes from user input
-    private void loadCodes() {
-        
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads course title from user input
-    private void loadTitle() {
-
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads meeting days from user input
-    private void loadDays() {
-
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads starting and ending times from user input
-    private void loadTimes() {
-
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads course schedule from temporary values
-    private void loadSchedule() {
-
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads course credits from user input
-    private void loadCredits() {
-
-    }
-
-    // MODIFIES: this
-    // EFFECTS: loads whether the course is required from user input
-    private void loadRequired() {
-
+        tempCourse = new Course(
+                courseAdder.getSubjectText(),
+                courseAdder.getCourseText(),
+                courseAdder.getSectionText(),
+                courseAdder.getTitleText(),
+                courseAdder.getSchedule(),
+                courseAdder.getCredit(),
+                courseAdder.isRequired()
+        );
     }
 
     // EFFECTS: this
@@ -242,7 +204,7 @@ public class PlannerManager {
     public void doDelete() {
         String message;
         String title = "Delete Course";
-        Object[] allCodes = planner.getWorklist().getStarredCodes().toArray();
+        Object[] allCodes = planner.getWorklist().getAllCodes().toArray();
         if (planner.getWorklist().getCourses().isEmpty()) {
             message = "No course in worklist!";
             JOptionPane.showMessageDialog(planner, message, "Warning", JOptionPane.WARNING_MESSAGE);
@@ -261,7 +223,7 @@ public class PlannerManager {
                 }
             }
         }
-        doStarredCourses();
+        doAllCourses();
     }
 
     // MODIFIES: this

@@ -1,5 +1,10 @@
 package ui.gui;
 
+import exception.IllegalDaysException;
+import exception.IllegalTimeException;
+import model.Schedule;
+import model.Time;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -169,15 +174,35 @@ public class CourseAdder extends JPanel {
         return sectionInputTextField.getText();
     }
 
+    public String getTitleText() {
+        return titleInputTextField.getText();
+    }
+
     // EFFECTS: returns the text entered in credits field
-    public String getCreditText() {
-        return creditInputTextField.getText();
+    public Schedule getSchedule() {
+        Schedule tempSchedule = null;
+        try {
+            int tempStartHour = Time.parseHour(startTimeInputTextField.getText());
+            int tempStartMinute = Time.parseMinute(startTimeInputTextField.getText());
+            Time tempStartTime = new Time(tempStartHour, tempStartMinute);
+            int tempEndHour = Time.parseHour(endTimeInputTextField.getText());
+            int tempEndMinute = Time.parseHour(endTimeInputTextField.getText());
+            Time tempEndTime = new Time(tempEndHour, tempEndMinute);
+            tempSchedule = new Schedule(getDays(), tempStartTime, tempEndTime);
+        } catch (IllegalTimeException e) {
+            String message = "Invalid time!";
+            JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+        } catch (IllegalDaysException e) {
+            String message = "Invalid meeting days!";
+            JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return tempSchedule;
     }
 
     // EFFECTS: returns an array of length 5, containing meeting days,
     //          as the checkbox values selected by user
-    public Boolean[] getDays() {
-        Boolean[] days = new Boolean[5];
+    private boolean[] getDays() {
+        boolean[] days = new boolean[5];
         for (int i = 0; i < 5; i++) {
             days[i] = false;
         }
@@ -197,6 +222,18 @@ public class CourseAdder extends JPanel {
             days[4] = true;
         }
         return days;
+    }
+
+    // EFFECTS: returns the number of credit entered in credits field
+    public int getCredit() {
+        int credit = 0;
+        try {
+            credit = Integer.parseInt(creditInputTextField.getText());
+        } catch (NumberFormatException e) {
+            String message = "Invalid credit number!";
+            JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        return credit;
     }
 
     // EFFECTS: returns true if the "Yes" button for "required" is selected
