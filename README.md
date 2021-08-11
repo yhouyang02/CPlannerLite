@@ -52,7 +52,7 @@ in `src/main/exception`.
 - `src/main/model/Schedule.java`
     - `Schedule(boolean[] days, Time start, Time end)` and
     - `parseDays(String s)`
-        - throws `IllegalDaysException` if `s` is not a valid representation of meeting days
+        - throws `IllegalDaysException` if `days` or `s` is not a valid representation of meeting days
 - `src/main/model/Course.java`
     - `parseSubjectCode(String s)`,
     - `parseCourseCode(String s)`, and
@@ -76,4 +76,5 @@ in `src/main/model`.
 ### Handling Exceptions
 
 1. Exceptions for the console version are caught and handled in `src/main/ui/PlannerApp.java`.
-2. Exceptions for the GUI version are caught and handled in `src/main/ui/gui/PlannerManager.java`. 
+2. Exceptions for the GUI version are caught and handled in `src/main/ui/gui/PlannerManager.java`.
+
