@@ -31,4 +31,49 @@ Columbia (UBC) Student Services.*
 - As a user, I want to be able to save my worklist to file.
 - As a user, I want to be able to load my worklist from file.
 - As a user, I want to be able to have the option to save my worklist to file or not when quitting the application.
-- As a user, I want to be able to have the option to load my worklist from file or not when starting the application. 
+- As a user, I want to be able to have the option to load my worklist from file or not when starting the application.
+
+## Phase 4: Task 2 (Robust Design)
+
+### Throwing Exceptions
+
+Exceptions are thrown from `src/main/model` when illegal actions are performed against the worklist (e.g. trying to add
+a course conflicting with existing ones, trying to delete a non-existing course from the worklist, trying to add a
+course with an impossible schedule, etc.) The below list contains all methods that throw an exception declared
+in `src/main/exception`.
+
+- `src/main/model/Time.java`
+    - `Time(int hour, int minute)`
+        - throws `IllegalHourException` if `hour` is not between 0 and 24
+        - throws `IllegalMinuteException` if `minute` is not between 0 and 60
+    - `parseHour(String s)` and
+    - `parseMinute(String s)`
+        - throws `IllegalTimeException` if `s` is not a valid representation of time
+- `src/main/model/Schedule.java`
+    - `Schedule(boolean[] days, Time start, Time end)` and
+    - `parseDays(String s)`
+        - throws `IllegalDaysException` if `s` is not a valid representation of meeting days
+- `src/main/model/Course.java`
+    - `parseSubjectCode(String s)`,
+    - `parseCourseCode(String s)`, and
+    - `parseSectionCode(String s)`
+        - throws `IllegalCodesException` if `s` is not a valid representation of course-related codes
+- `src/main/model/Worklist.java`
+    - `addCourse(Course course)`
+        - throws `CourseAlreadyExistsException` if `course` is already existed in the worklist
+        - throws `CourseConflictsException` if the schedule of `course` conflicts with existing courses
+    - `deleteCourse(Course course)`,
+    - `setRequired(Course course, boolean required)`,
+    - `starCourse(Course course)`, and
+    - `unstarCourse(Course course)`
+        - throws `CourseNotFoundException` if `course` is not found in the worklist
+
+### Testing Exceptions
+
+Exceptions are tested in `src/test/model`. Each test class contains tests for the corresponding class
+in `src/main/model`.
+
+### Handling Exceptions
+
+1. Exceptions for the console version are caught and handled in `src/main/ui/PlannerApp.java`.
+2. Exceptions for the GUI version are caught and handled in `src/main/ui/gui/PlannerManager.java`. 
