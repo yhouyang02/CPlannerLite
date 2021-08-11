@@ -61,7 +61,7 @@ public class Course implements Writable {
     }
 
     // EFFECTS: returns true if s is "T", and false if s is "F", case-insensitive;
-    //          throws IllegalArgumentException when s is neither 'T' nor 'F', case-insensitive
+    //          throws IllegalArgumentException if s is neither 'T' nor 'F', case-insensitive
     public static boolean parseRequired(String s) throws IllegalArgumentException {
         if (!s.equalsIgnoreCase("T") && !s.equalsIgnoreCase("F")) {
             throw new IllegalArgumentException();

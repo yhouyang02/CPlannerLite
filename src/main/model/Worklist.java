@@ -65,33 +65,33 @@ public class Worklist implements Writable {
     }
 
     // MODIFIES: this
-    // EFFECTS: sets course c to required or not;
-    //          throws CourseNotFoundException if courses does not contain c
-    public void setRequired(Course c, boolean required) throws CourseNotFoundException {
-        if (!courses.contains(c)) {
+    // EFFECTS: sets course to required or not;
+    //          throws CourseNotFoundException if courses does not contain course
+    public void setRequired(Course course, boolean required) throws CourseNotFoundException {
+        if (!courses.contains(course)) {
             throw new CourseNotFoundException();
         }
-        courses.get(courses.indexOf(c)).setRequired(required);
+        courses.get(courses.indexOf(course)).setRequired(required);
     }
 
     // MODIFIES: this
-    // EFFECTS: star course c in courses;
-    //          throws CourseNotFoundException if courses does not contain c;
-    public void starCourse(Course c) throws CourseNotFoundException {
-        if (!courses.contains(c)) {
+    // EFFECTS: star course in courses;
+    //          throws CourseNotFoundException if courses does not contain course;
+    public void starCourse(Course course) throws CourseNotFoundException {
+        if (!courses.contains(course)) {
             throw new CourseNotFoundException();
         }
-        courses.get(courses.indexOf(c)).star();
+        courses.get(courses.indexOf(course)).star();
     }
 
     // MODIFIES: this
-    // EFFECTS: unstar course c in courses;
-    //          throws CourseNotFoundException if courses does not contain c;
-    public void unstarCourse(Course c) throws CourseNotFoundException {
-        if (!courses.contains(c)) {
+    // EFFECTS: unstar course in courses;
+    //          throws CourseNotFoundException if courses does not contain course;
+    public void unstarCourse(Course course) throws CourseNotFoundException {
+        if (!courses.contains(course)) {
             throw new CourseNotFoundException();
         }
-        courses.get(courses.indexOf(c)).unstar();
+        courses.get(courses.indexOf(course)).unstar();
     }
 
     // EFFECTS: returns a list of starred courses in courses

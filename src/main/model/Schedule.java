@@ -36,7 +36,7 @@ public class Schedule implements Writable {
 
     // EFFECTS: parses string s as a list of boolean representing meeting days;
     //          throws IllegalDaysException if s does not have a length of 5, or
-    //                                      if s is not completely composed of 'T' and 'F', case-insensitive
+    //                                      if s is not completely composed of 'T' or 'F', case-insensitive
     public static boolean[] parseDays(String s) throws IllegalDaysException {
         boolean[] tempDays = new boolean[5];
         if (s.length() != 5) {
