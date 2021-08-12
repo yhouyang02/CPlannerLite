@@ -1,4 +1,4 @@
-_# CPSC 210 Personal Project:  Course Planner
+# CPSC 210 Personal Project:  Course Planner
 
 ## Project Proposal
 
