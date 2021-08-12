@@ -187,7 +187,7 @@ public class CourseAdder extends JPanel {
             int tempStartMinute = Time.parseMinute(startTimeInputTextField.getText());
             Time tempStartTime = new Time(tempStartHour, tempStartMinute);
             int tempEndHour = Time.parseHour(endTimeInputTextField.getText());
-            int tempEndMinute = Time.parseHour(endTimeInputTextField.getText());
+            int tempEndMinute = Time.parseMinute(endTimeInputTextField.getText());
             Time tempEndTime = new Time(tempEndHour, tempEndMinute);
             tempSchedule = new Schedule(getDays(), tempStartTime, tempEndTime);
         } catch (IllegalTimeException e) {
