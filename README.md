@@ -1,4 +1,4 @@
-# CPSC 210 Personal Project:  Course Planner
+# Personal Project: CPlanner Lite (Course Planner)
 
 ## Project Proposal
 
@@ -33,7 +33,7 @@ Columbia (UBC) Student Services.*
 - As a user, I want to be able to have the option to save my worklist to file or not when quitting the application.
 - As a user, I want to be able to have the option to load my worklist from file or not when starting the application.
 
-## Phase 4: Task 2 (Robust Design)
+## Robust Design
 
 ### Throwing Exceptions
 
@@ -78,7 +78,7 @@ in `src/main/model`.
 1. Exceptions for the console version are caught and handled in `src/main/ui/PlannerApp.java`.
 2. Exceptions for the GUI version are caught and handled in `src/main/ui/gui/PlannerManager.java`.
 
-## Phase 4: Task 3 (Refactoring)
+## Refactoring
 
 The purposes of the following classes are:
 
