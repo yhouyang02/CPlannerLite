@@ -87,7 +87,7 @@ public class PlannerAppGUI extends JFrame {
         contentPanel.setBackground(Color.WHITE);
         contentPanel.setOpaque(true);
 
-        contentLabel = new JLabel("Welcome to Course Planner!");
+        contentLabel = new JLabel("Welcome to CPlanner!");
         contentLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
         contentText = new JTextArea(CONTENT_ROWS, CONTENT_COLUMNS);
@@ -111,7 +111,7 @@ public class PlannerAppGUI extends JFrame {
     // EFFECTS: displays the start menu and lets user load or create a worklist
     private void start() {
         JLabel message = new JLabel("Do you want to load existing worklist from file?");
-        String title = "Welcome to Course Planner!";
+        String title = "Welcome to CPlanner!";
 
         int command = JOptionPane.showConfirmDialog(this,
                 message, title, JOptionPane.YES_NO_OPTION);
