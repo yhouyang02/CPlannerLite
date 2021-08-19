@@ -1,4 +1,4 @@
-# Personal Project: CPlanner Lite (Course Planner)
+# Personal Project: CPlanner Lite
 
 ## Project Proposal
 
